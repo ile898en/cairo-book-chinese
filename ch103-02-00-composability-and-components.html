@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>可组合性和组件 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch103-02-00-composability-and-components.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="组件-components智能合约的乐高积木"><a class="header" href="#组件-components智能合约的乐高积木">组件 (Components)：智能合约的乐高积木</a></h1>
+<p>开发共享通用逻辑和存储的合约可能会很痛苦且容易出错，因为这些逻辑很难重用，并且需要在每个合约中重新实现。但是，如果有办法只将你需要的额外功能插入到你的合约中，将你合约的核心逻辑与其余部分分开呢？</p>
+<p>组件正是提供了这一点。它们是封装了可重用的逻辑、存储和事件的模块化附加组件，可以合并到多个合约中。它们可用于扩展合约的功能，而不必一遍又一遍地重新实现相同的逻辑。</p>
+<p>将组件视为乐高积木。它们允许你通过插入你或其他人编写的模块来丰富你的合约。这个模块可以是一个简单的模块，比如所有权组件，也可以是更复杂的模块，比如一个完整的 ERC20 代币。</p>
+<p>组件是一个单独的模块，可以包含存储、事件和函数。与合约不同，组件不能被声明或部署。它的逻辑最终将成为嵌入它的合约字节码的一部分。</p>
+<h2 id="组件里有什么"><a class="header" href="#组件里有什么">组件里有什么？</a></h2>
+<p>组件非常类似于合约。它可以包含：</p>
+<ul>
+<li>存储变量</li>
+<li>事件</li>
+<li>外部和内部函数</li>
+</ul>
+<p>与合约不同，组件不能单独部署。组件的代码成为它嵌入的合约的一部分。</p>
+<h2 id="创建组件"><a class="header" href="#创建组件">创建组件</a></h2>
+<p>要创建组件，首先在用 <code>#[starknet::component]</code> 属性装饰的自己的模块中定义它。在这个模块中，你可以声明 <code>Storage</code> 结构体和 <code>Event</code> 枚举，就像通常在 <a href="./ch100-00-introduction-to-smart-contracts.html#">合约</a> 中所做的那样。</p>
+<p>下一步是定义组件接口，包含允许外部访问组件逻辑的函数签名。你可以通过声明带有 <code>#[starknet::interface]</code> 属性的 Trait 来定义组件的接口，就像对合约所做的那样。此接口将用于使用 <a href="./ch102-02-interacting-with-another-contract.html">分发器</a> 模式启用对组件函数的外部访问。</p>
+<p>组件外部逻辑的实际实现是在标记为 <code>#[embeddable_as(name)]</code> 的 <code>impl</code> 块中完成的。通常，这个 <code>impl</code> 块将是定义组件接口的 trait 的实现。</p>
+<blockquote>
+<p>注意：<code>name</code> 是我们在合约中用来引用组件的名称。它不同于你的 impl 的名称。</p>
+</blockquote>
+<p>你也可以定义不能从外部访问的内部函数，只需省略内部 <code>impl</code> 块上方的 <code>#[embeddable_as(name)]</code> 属性。你将能够在嵌入组件的合约内部使用这些内部函数，但不能从外部与它交互，因为它们不是合约 ABI 的一部分。</p>
+<p>这些 <code>impl</code> 块中的函数期望像 <code>ref self: ComponentState&lt;TContractState&gt;</code>（对于状态修改函数）或 <code>self: @ComponentState&lt;TContractState&gt;</code>（对于视图函数）这样的参数。这使得 impl 对 <code>TContractState</code> 是通用的，允许我们在任何合约中使用此组件。</p>
+<h3 id="示例一个-ownable-组件"><a class="header" href="#示例一个-ownable-组件">示例：一个 Ownable 组件</a></h3>
+<blockquote>
+<p>⚠️ 下面显示的示例未经审计，不适用于生产用途。作者不对使用此代码造成的任何损害负责。</p>
+</blockquote>
+<p>Ownable 组件的接口，定义了用于管理合约所有权的外部可用方法，如下所示：</p>
+<pre><code class="language-cairo noplayground">#[starknet::interface]
+trait IOwnable&lt;TContractState&gt; {
+    //ANCHOR: trait_def
+    fn owner(self: @TContractState) -&gt; ContractAddress;
+    fn transfer_ownership(ref self: TContractState, new_owner: ContractAddress);
+    fn renounce_ownership(ref self: TContractState);
+    //ANCHOR_END: trait_def
+}
+</code></pre>
+<p>组件本身定义为：</p>
+<pre><code class="language-cairo noplayground">#[starknet::component]
+pub mod OwnableComponent {
+    use core::num::traits::Zero;
+    use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
+    use starknet::{ContractAddress, get_caller_address};
+    use super::Errors;
+
+    #[storage]
+    pub struct Storage {
+        owner: ContractAddress,
+    }
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    pub enum Event {
+        OwnershipTransferred: OwnershipTransferred,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct OwnershipTransferred {
+        previous_owner: ContractAddress,
+        new_owner: ContractAddress,
+    }
+
+    //ANCHOR: impl_signature
+    #[embeddable_as(OwnableImpl)]
+    impl Ownable&lt;
+        TContractState, +HasComponent&lt;TContractState&gt;,
+    &gt; of super::IOwnable&lt;ComponentState&lt;TContractState&gt;&gt; {
+        //ANCHOR_END: impl_signature
+        fn owner(self: @ComponentState&lt;TContractState&gt;) -&gt; ContractAddress {
+            self.owner.read()
+        }
+
+        fn transfer_ownership(
+            ref self: ComponentState&lt;TContractState&gt;, new_owner: ContractAddress,
+        ) {
+            assert(!new_owner.is_zero(), Errors::ZERO_ADDRESS_OWNER);
+            self.assert_only_owner();
+            self._transfer_ownership(new_owner);
+        }
+
+        fn renounce_ownership(ref self: ComponentState&lt;TContractState&gt;) {
+            self.assert_only_owner();
+            self._transfer_ownership(Zero::zero());
+        }
+    }
+
+    #[generate_trait]
+    pub impl InternalImpl&lt;
+        TContractState, +HasComponent&lt;TContractState&gt;,
+    &gt; of InternalTrait&lt;TContractState&gt; {
+        fn initializer(ref self: ComponentState&lt;TContractState&gt;, owner: ContractAddress) {
+            self._transfer_ownership(owner);
+        }
+
+        fn assert_only_owner(self: @ComponentState&lt;TContractState&gt;) {
+            let owner: ContractAddress = self.owner.read();
+            let caller: ContractAddress = get_caller_address();
+            assert(!caller.is_zero(), Errors::ZERO_ADDRESS_CALLER);
+            assert(caller == owner, Errors::NOT_OWNER);
+        }
+
+        fn _transfer_ownership(
+            ref self: ComponentState&lt;TContractState&gt;, new_owner: ContractAddress,
+        ) {
+            let previous_owner: ContractAddress = self.owner.read();
+            self.owner.write(new_owner);
+            self
+                .emit(
+                    OwnershipTransferred { previous_owner: previous_owner, new_owner: new_owner },
+                );
+        }
+    }
+}
+</code></pre>
+<p>这种语法实际上与用于合约的语法非常相似。唯一的区别在于 impl 上方的 <code>#[embeddable_as]</code> 属性以及我们将详细剖析的 impl 块的泛型性。</p>
+<p>如你所见，我们的组件有两个 <code>impl</code> 块：一个对应于接口 trait 的实现，另一个包含不应在外部公开且仅供内部使用的方法。作为接口的一部分公开 <code>assert_only_owner</code> 是没有意义的，因为它只意味着由嵌入组件的合约在内部使用。</p>
+<h2 id="仔细看看-impl-块"><a class="header" href="#仔细看看-impl-块">仔细看看 <code>impl</code> 块</a></h2>
+<pre><code class="language-cairo noplayground">    #[embeddable_as(OwnableImpl)]
+    impl Ownable&lt;
+        TContractState, +HasComponent&lt;TContractState&gt;,
+    &gt; of super::IOwnable&lt;ComponentState&lt;TContractState&gt;&gt; {
+</code></pre>
+<p><code>#[embeddable_as]</code> 属性用于将 impl 标记为可嵌入合约内部。它允许我们指定在合约中用于引用此组件的 impl 的名称。在这种情况下，组件将在嵌入它的合约中被称为 <code>OwnableImpl</code>。</p>
+<p>实现本身对 <code>ComponentState&lt;TContractState&gt;</code> 是通用的，并增加了 <code>TContractState</code> 必须实现 <code>HasComponent&lt;T&gt;</code> trait 的限制。这允许我们在任何合约中使用该组件，只要该合约实现了 <code>HasComponent</code> trait。使用组件不需要详细了解此机制，但如果你对内部工作原理感到好奇，可以在 <a href="./ch103-02-01-under-the-hood.html">“组件底层原理”</a> 部分阅读更多内容。</p>
+<p>与常规智能合约的主要区别之一是，对存储和事件的访问是通过泛型 <code>ComponentState&lt;TContractState&gt;</code> 类型而不是 <code>ContractState</code> 完成的。注意，虽然类型不同，但访问存储或发出事件的方式类似，都是通过 <code>self.storage_var_name.read()</code> 或 <code>self.emit(...)</code>。</p>
+<blockquote>
+<p>注意：为避免混淆，请遵循 OpenZeppelin 的模式：在可嵌入名称和合约的 impl 别名中保留 <code>Impl</code> 后缀（例如，<code>OwnableImpl</code>），而本地组件 impl 以 trait 命名，不带后缀（例如，<code>impl Ownable&lt;...&gt;</code>）。</p>
+</blockquote>
+<h2 id="将合约迁移到组件"><a class="header" href="#将合约迁移到组件">将合约迁移到组件</a></h2>
+<p>由于合约和组件都有很多相似之处，因此从合约迁移到组件实际上非常容易。唯一需要的更改是：</p>
+<ul>
+<li>向模块添加 <code>#[starknet::component]</code> 属性。</li>
+<li>向将嵌入另一个合约的 <code>impl</code> 块添加 <code>#[embeddable_as(name)]</code> 属性。</li>
+<li>向 <code>impl</code> 块添加泛型参数：
+<ul>
+<li>添加 <code>TContractState</code> 作为泛型参数。</li>
+<li>添加 <code>+HasComponent&lt;TContractState&gt;</code> 作为 impl 限制。</li>
+</ul>
+</li>
+<li>将 <code>impl</code> 块内部函数中的 <code>self</code> 参数的类型更改为 <code>ComponentState&lt;TContractState&gt;</code> 而不是 <code>ContractState</code>。</li>
+</ul>
+<p>对于没有显式定义并使用 <code>#[generate_trait]</code> 生成的 trait，逻辑是相同的 —— 但 trait 对 <code>TContractState</code> 是通用的，而不是 <code>ComponentState&lt;TContractState&gt;</code>，如 <code>InternalTrait</code> 的示例所示。</p>
+<h2 id="在合约内部使用组件"><a class="header" href="#在合约内部使用组件">在合约内部使用组件</a></h2>
+<p>组件的主要优势在于它允许在你的合约中重用已构建的原语，且样板代码量受到限制。要将组件集成到你的合约中，你需要：</p>
+<ol>
+<li>
+<p>使用 <code>component!()</code> 宏声明它，指定</p>
+<ol>
+<li>组件的路径 <code>path::to::component</code>。</li>
+<li>你的合约存储中引用此组件存储的变量名称（例如 <code>ownable</code>）。</li>
+<li>你的合约事件枚举中引用此组件事件的变体名称（例如 <code>OwnableEvent</code>）。</li>
+</ol>
+</li>
+<li>
+<p>将组件的存储和事件的路径添加到合约的 <code>Storage</code> 和 <code>Event</code>。它们必须匹配步骤 1 中提供的名称（例如 <code>ownable: ownable_component::Storage</code> 和 <code>OwnableEvent: ownable_component::Event</code>）。</p>
+<p>存储变量 <strong>必须</strong> 用 <code>#[substorage(v0)]</code> 属性注释。</p>
+</li>
+<li>
+<p>嵌入定义在你的合约内的组件逻辑，通过使用 impl 别名用具体的 <code>ContractState</code> 实例化组件的泛型 impl。此别名必须用 <code>#[abi(embed_v0)]</code> 注释以在外部公开组件的函数。</p>
+<p>如你所见，InternalImpl 没有标记为 <code>#[abi(embed_v0)]</code>。确实，我们不想在外部公开在此 impl 中定义的函数。但是，我们可能仍然希望在内部访问它们。</p>
+</li>
+</ol>
+<p>例如，要嵌入上面定义的 <code>Ownable</code> 组件，我们会做以下操作：</p>
+<pre><code class="language-cairo noplayground">#[starknet::contract]
+mod OwnableCounter {
+    use listing_01_ownable::component::OwnableComponent;
+    use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
+
+    component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
+
+    //ANCHOR:  embedded_impl
+    #[abi(embed_v0)]
+    impl OwnableImpl = OwnableComponent::OwnableImpl&lt;ContractState&gt;;
+
+    impl OwnableInternalImpl = OwnableComponent::InternalImpl&lt;ContractState&gt;;
+    //ANCHOR_END: embedded_impl
+
+    #[storage]
+    struct Storage {
+        counter: u128,
+        #[substorage(v0)]
+        ownable: OwnableComponent::Storage,
+    }
+
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        OwnableEvent: OwnableComponent::Event,
+    }
+
+
+    #[abi(embed_v0)]
+    fn foo(ref self: ContractState) {
+        self.ownable.assert_only_owner();
+        self.counter.write(self.counter.read() + 1);
+    }
+}
+</code></pre>
+<p>组件的逻辑现在无缝地成为了合约的一部分！我们可以通过使用以合约地址实例化的 <code>IOwnableDispatcher</code> 来在外部调用组件函数。</p>
+<pre><code class="language-cairo">#[starknet::interface]
+trait IOwnable&lt;TContractState&gt; {
+    //ANCHOR: trait_def
+    fn owner(self: @TContractState) -&gt; ContractAddress;
+    fn transfer_ownership(ref self: TContractState, new_owner: ContractAddress);
+    fn renounce_ownership(ref self: TContractState);
+    //ANCHOR_END: trait_def
+}
+</code></pre>
+<h2 id="堆叠组件以实现最大的可组合性"><a class="header" href="#堆叠组件以实现最大的可组合性">堆叠组件以实现最大的可组合性</a></h2>
+<p>当将多个组件组合在一起时，组件的可组合性才真正闪耀。每个组件都将其功能添加到合约中。你可以依靠 <a href="https://github.com/OpenZeppelin/cairo-contracts">Openzeppelin 的组件实现</a> 来快速插入你需要合约拥有的所有常用功能。</p>
+<p>开发人员可以专注于他们的核心合约逻辑，同时依靠经过实战测试和审计的组件来处理其他所有事情。</p>
+<p>组件甚至可以 <a href="./ch103-02-02-component-dependencies.html">依赖</a> 其他组件，通过限制它们通用的 <code>TContractstate</code> 来实现另一个组件的 trait。在我们深入研究这种机制之前，让我们先看看 <a href="./ch103-02-01-under-the-hood.html">组件在底层是如何工作的</a>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch103-01-optimizing-storage-costs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch103-02-01-under-the-hood.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch103-01-optimizing-storage-costs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch103-02-01-under-the-hood.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>泛型数据类型 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch08-01-generic-data-types.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="泛型数据类型"><a class="header" href="#泛型数据类型">泛型数据类型</a></h1>
+<p>我们使用泛型来为项声明（如结构体和函数）创建定义，然后我们可以将它们与许多不同的具体数据类型一起使用。在 Cairo 中，我们可以在定义函数、结构体、枚举、traits、实现和方法时使用泛型。在本章中，我们将看看如何有效地对所有这些使用泛型类型。</p>
+<p>泛型允许我们编写适用于多种类型的可重用代码，从而避免代码重复，同时增强代码的可维护性。</p>
+<h2 id="泛型函数"><a class="header" href="#泛型函数">泛型函数</a></h2>
+<p>使函数泛型化意味着它可以对不同类型进行操作，从而避免了需要多个特定于类型的实现。这就导致了显着的代码减少并增加了代码的灵活性。</p>
+<p>在定义使用泛型的函数时，我们将泛型放在函数签名中，我们通常会在那里指定参数和返回值的数据类型。例如，想象我们想要创建一个函数，给定两个项的 <code>Array</code>，它将返回最大的那个。如果我们需对不同类型的列表执行此操作，那么我们将不得不每次重新定义该函数。幸运的是，我们可以使用泛型一次性实现该函数，然后继续处理其他任务。</p>
+<pre><code class="language-cairo">// Specify generic type T between the angulars
+fn largest_list&lt;T&gt;(l1: Array&lt;T&gt;, l2: Array&lt;T&gt;) -&gt; Array&lt;T&gt; {
+    if l1.len() &gt; l2.len() {
+        l1
+    } else {
+        l2
+    }
+}
+
+#[executable]
+fn main() {
+    let mut l1 = array![1, 2];
+    let mut l2 = array![3, 4, 5];
+
+    // There is no need to specify the concrete type of T because
+    // it is inferred by the compiler
+    let l3 = largest_list(l1, l2);
+}
+</code></pre>
+<p><code>largest_list</code> 函数比较两个相同类型的列表，并返回元素较多的那个，并删除另一个。如果你编译前面的代码，你会注意到它会因错误而失败，说没有定义用于删除泛型类型数组的 traits。发生这种情况是因为编译器在执行 <code>main</code> 函数时无法保证 <code>Array&lt;T&gt;</code> 是可删除的 (droppable)。为了删除 <code>T</code> 的数组，编译器必须首先知道如何删除 <code>T</code>。这可以通过在 <code>largest_list</code> 的函数签名中指定 <code>T</code> 必须实现 <code>Drop</code> trait 来修复。<code>largest_list</code> 的正确函数定义如下：</p>
+<pre><code class="language-cairo">fn largest_list&lt;T, impl TDrop: Drop&lt;T&gt;&gt;(l1: Array&lt;T&gt;, l2: Array&lt;T&gt;) -&gt; Array&lt;T&gt; {
+    if l1.len() &gt; l2.len() {
+        l1
+    } else {
+        l2
+    }
+}
+</code></pre>
+<p>新的 <code>largest_list</code> 函数在其定义中包含了要求：无论放在那里的泛型类型是什么，它必须是可删除的。这就是我们要说的 <em>trait 约束 (trait bounds)</em>。<code>main</code> 函数保持不变，编译器足够聪明，可以推断出正在使用哪种具体类型以及它是否实现了 <code>Drop</code> trait。</p>
+<h3 id="泛型类型的约束"><a class="header" href="#泛型类型的约束">泛型类型的约束</a></h3>
+<p>在定义泛型类型时，拥有关于它们的信息很有用。知道泛型类型实现了哪些 trait 允许我们在函数的逻辑中更有效地使用它，代价是约束可以与函数一起使用的泛型类型。我们之前通过将 <code>TDrop</code> 实现添加为 <code>largest_list</code> 的泛型参数的一部分来看到了这一点的示例。虽然添加 <code>TDrop</code> 是为了满足编译器的要求，但我们也可以添加约束以使我们的函数逻辑受益。</p>
+<p>想象我们有一个某种泛型类型 <code>T</code> 的元素列表，我们想在其中找到最小的元素。最初，我们知道对于类型 <code>T</code> 的元素是可比较的，它必须实现 <code>PartialOrd</code> trait。结果函数将是：</p>
+<pre><code class="language-cairo">// Given a list of T get the smallest one
+// The PartialOrd trait implements comparison operations for T
+fn smallest_element&lt;T, impl TPartialOrd: PartialOrd&lt;T&gt;&gt;(list: @Array&lt;T&gt;) -&gt; T {
+    // This represents the smallest element through the iteration
+    // Notice that we use the desnap (*) operator
+    let mut smallest = *list[0];
+
+    // The index we will use to move through the list
+    let mut index = 1;
+
+    // Iterate through the whole list storing the smallest
+    while index &lt; list.len() {
+        if *list[index] &lt; smallest {
+            smallest = *list[index];
+        }
+        index = index + 1;
+    }
+
+    smallest
+}
+
+#[executable]
+fn main() {
+    let list: Array&lt;u8&gt; = array![5, 3, 10];
+
+    // We need to specify that we are passing a snapshot of `list` as an argument
+    let s = smallest_element(@list);
+    assert!(s == 3);
+}
+</code></pre>
+<p><code>smallest_element</code> 函数使用实现 <code>PartialOrd</code> trait 的泛型类型 <code>T</code>，接受 <code>Array&lt;T&gt;</code> 的快照作为参数并返回最小元素的副本。因为参数是 <code>@Array&lt;T&gt;</code> 类型，我们不再需要在执行结束时删除它，所以我们不需要为 <code>T</code> 也实现 <code>Drop</code> trait。那为什么它不能编译呢？</p>
+<p>在 <code>list</code> 上索引时，结果值是索引元素的快照，除非为 <code>@T</code> 实现了 <code>PartialOrd</code>，否则我们需要使用 <code>*</code> 除快照 (desnap) 元素。<code>*</code> 操作需要从 <code>@T</code> 复制到 <code>T</code>，这意味着 <code>T</code> 需要实现 <code>Copy</code> trait。将类型 <code>@T</code> 的元素复制到 <code>T</code> 后，现在有了需要删除的类型 <code>T</code> 的变量，这就要求 <code>T</code> 也实现 <code>Drop</code> trait。我们必须添加 <code>Drop</code> 和 <code>Copy</code> traits 实现以使函数正确。更新 <code>smallest_element</code> 函数后，结果代码将是：</p>
+<pre><code class="language-cairo">fn smallest_element&lt;T, impl TPartialOrd: PartialOrd&lt;T&gt;, impl TCopy: Copy&lt;T&gt;, impl TDrop: Drop&lt;T&gt;&gt;(
+    list: @Array&lt;T&gt;,
+) -&gt; T {
+    let mut smallest = *list[0];
+    let mut index = 1;
+
+    while index &lt; list.len() {
+        if *list[index] &lt; smallest {
+            smallest = *list[index];
+        }
+        index = index + 1;
+    }
+
+    smallest
+}
+</code></pre>
+<h3 id="匿名泛型实现参数--运算符"><a class="header" href="#匿名泛型实现参数--运算符">匿名泛型实现参数 (<code>+</code> 运算符)</a></h3>
+<p>到目前为止，我们总是为每个需要的泛型 trait 实现指定一个名称：<code>TPartialOrd</code> 对应 <code>PartialOrd&lt;T&gt;</code>，<code>TDrop</code> 对应 <code>Drop&lt;T&gt;</code>，<code>TCopy</code> 对应 <code>Copy&lt;T&gt;</code>。</p>
+<p>然而，大多数时候，我们在函数​​体内不使用实现；我们只将其用作约束。在这些情况下，我们可以使用 <code>+</code> 运算符来指定泛型类型必须实现一个 trait，而无需命名该实现。这被称为 <em>匿名泛型实现参数 (anonymous generic implementation parameter)</em>。</p>
+<p>例如，<code>+PartialOrd&lt;T&gt;</code> 等价于 <code>impl TPartialOrd: PartialOrd&lt;T&gt;</code>。</p>
+<p>我们可以如下重写 <code>smallest_element</code> 函数签名：</p>
+<pre><code class="language-cairo">&lt;!-- Warning: Anchor '1' not found in lib.cairo --&gt;
+</code></pre>
+<h2 id="结构体"><a class="header" href="#结构体">结构体</a></h2>
+<p>我们还可以定义结构体以对一个或多个字段使用泛型类型参数，使用 <code>&lt;&gt;</code> 语法，类似于函数定义。首先，我们在结构体名称后面的尖括号内声明类型参数的名称。然后我们在结构体定义中使用泛型类型，否则我们会指定具体数据类型。下一个代码示例展示了定义 <code>Wallet&lt;T&gt;</code>，它有一个类型为 <code>T</code> 的 <code>balance</code> 字段。</p>
+<pre><code class="language-cairo">#[derive(Drop)]
+struct Wallet&lt;T&gt; {
+    balance: T,
+}
+
+#[executable]
+fn main() {
+    let w = Wallet { balance: 3 };
+}
+</code></pre>
+<p>上述代码自动为 <code>Wallet</code> 类型派生 <code>Drop</code> trait。它等效于编写以下代码：</p>
+<pre><code class="language-cairo">struct Wallet&lt;T&gt; {
+    balance: T,
+}
+
+impl WalletDrop&lt;T, +Drop&lt;T&gt;&gt; of Drop&lt;Wallet&lt;T&gt;&gt;;
+
+#[executable]
+fn main() {
+    let w = Wallet { balance: 3 };
+}
+</code></pre>
+<p>我们避免对 <code>Wallet</code> 的 <code>Drop</code> 实现使用 <code>derive</code> 宏，而是定义我们自己的 <code>WalletDrop</code> 实现。注意，就像函数一样，我们必须为 <code>WalletDrop</code> 定义一个额外的泛型类型，说明 <code>T</code> 也实现了 <code>Drop</code> trait。我们基本上是在说，只要 <code>T</code> 也是可删除的，结构体 <code>Wallet&lt;T&gt;</code> 就是可删除的。</p>
+<p>最后，如果我们想向 <code>Wallet</code> 添加一个表示其地址的字段，并且我们希望该字段与 <code>T</code> 不同但也通用的，我们可以简单地在 <code>&lt;&gt;</code> 之间添加另一个泛型类型：</p>
+<pre><code class="language-cairo">#[derive(Drop)]
+struct Wallet&lt;T, U&gt; {
+    balance: T,
+    address: U,
+}
+
+#[executable]
+fn main() {
+    let w = Wallet { balance: 3, address: 14 };
+}
+</code></pre>
+<p>我们向 <code>Wallet</code> 结构体定义添加了一个新的泛型类型 <code>U</code>，然后将此类型分配给新的字段成员 <code>address</code>。注意 <code>Drop</code> trait 的 <code>derive</code> 属性对 <code>U</code>也有效。</p>
+<h2 id="枚举"><a class="header" href="#枚举">枚举</a></h2>
+<p>正如我们对结构体所做的那样，我们可以定义枚举以在其变体中持有泛型数据类型。例如 Cairo 核心库提供的 <code>Option&lt;T&gt;</code> 枚举：</p>
+<pre><code class="language-cairo noplayground">enum Option&lt;T&gt; {
+    Some: T,
+    None,
+}
+</code></pre>
+<p><code>Option&lt;T&gt;</code> 枚举在类型 <code>T</code> 上是泛型的，并且有两个变体：<code>Some</code>，它持有一个类型为 <code>T</code> 的值，以及 <code>None</code>，它不持有任何值。通过使用 <code>Option&lt;T&gt;</code> 枚举，我们可以表达可选值的抽象概念，并且因为该值具有泛型类型 <code>T</code>，我们可以将此抽象与任何类型一起使用。</p>
+<p>枚举也可以使用多个泛型类型，就像核心库提供的 <code>Result&lt;T, E&gt;</code> 枚举的定义一样：</p>
+<pre><code class="language-cairo noplayground">enum Result&lt;T, E&gt; {
+    Ok: T,
+    Err: E,
+}
+</code></pre>
+<p><code>Result&lt;T, E&gt;</code> 枚举有两个泛型类型 <code>T</code> 和 <code>E</code>，以及两个变体：<code>Ok</code> 持有类型 <code>T</code> 的值，<code>Err</code> 持有类型 <code>E</code> 的值。这个定义使得在任何我们有一个可能成功（通过返回类型 <code>T</code> 的值）或失败（通过返回类型 <code>E</code> 的值）的操作的地方使用 <code>Result</code> 枚举变得方便。</p>
+<h2 id="泛型方法"><a class="header" href="#泛型方法">泛型方法</a></h2>
+<p>我们可以在结构体和枚举上实现方法，并在其定义中也使用泛型类型。使用我们之前的 <code>Wallet&lt;T&gt;</code> 结构体定义，我们为它定义一个 <code>balance</code> 方法：</p>
+<pre><code class="language-cairo">#[derive(Copy, Drop)]
+struct Wallet&lt;T&gt; {
+    balance: T,
+}
+
+trait WalletTrait&lt;T&gt; {
+    fn balance(self: @Wallet&lt;T&gt;) -&gt; T;
+}
+
+impl WalletImpl&lt;T, +Copy&lt;T&gt;&gt; of WalletTrait&lt;T&gt; {
+    fn balance(self: @Wallet&lt;T&gt;) -&gt; T {
+        return *self.balance;
+    }
+}
+
+#[executable]
+fn main() {
+    let w = Wallet { balance: 50 };
+    assert!(w.balance() == 50);
+}
+</code></pre>
+<p>我们首先定义 <code>WalletTrait&lt;T&gt;</code> trait，使用泛型类型 <code>T</code> 定义一个返回 <code>Wallet</code> 中 <code>balance</code> 字段值的方法。然后在 <code>WalletImpl&lt;T&gt;</code> 中给出该 trait 的实现。注意，你需要在 trait 和实现的定义中都包含泛型类型。</p>
+<p>在类型上定义方法时，我们还可以指定对泛型类型的约束。例如，我们可以只为 <code>Wallet&lt;u128&gt;</code> 实例实现方法，而不是为 <code>Wallet&lt;T&gt;</code> 实现。在代码示例中，我们为 <code>balance</code> 字段具有具体类型 <code>u128</code> 的钱包定义了一个实现。</p>
+<pre><code class="language-cairo">#[derive(Copy, Drop)]
+struct Wallet&lt;T&gt; {
+    balance: T,
+}
+
+/// Generic trait for wallets
+trait WalletTrait&lt;T&gt; {
+    fn balance(self: @Wallet&lt;T&gt;) -&gt; T;
+}
+
+impl WalletImpl&lt;T, +Copy&lt;T&gt;&gt; of WalletTrait&lt;T&gt; {
+    fn balance(self: @Wallet&lt;T&gt;) -&gt; T {
+        return *self.balance;
+    }
+}
+
+/// Trait for wallets of type u128
+trait WalletReceiveTrait {
+    fn receive(ref self: Wallet&lt;u128&gt;, value: u128);
+}
+
+impl WalletReceiveImpl of WalletReceiveTrait {
+    fn receive(ref self: Wallet&lt;u128&gt;, value: u128) {
+        self.balance += value;
+    }
+}
+
+#[executable]
+fn main() {
+    let mut w = Wallet { balance: 50 };
+    assert!(w.balance() == 50);
+
+    w.receive(100);
+    assert!(w.balance() == 150);
+}
+</code></pre>
+<p>新方法 <code>receive</code> 增加了任何 <code>Wallet&lt;u128&gt;</code> 实例的 <code>balance</code> 大小。注意我们更改了 <code>main</code> 函数，使 <code>w</code> 成为可变变量，以便它能够更新其余额。如果我们通过更改 <code>balance</code> 的类型来更改 <code>w</code> 的初始化，之前的代码将无法编译。</p>
+<p>Cairo 也允许我们在泛型 trait 中定义泛型方法。使用过去 <code>Wallet&lt;U, V&gt;</code> 的实现，我们将定义一个 trait，它选择两个不同泛型类型的钱包并创建一个具有每种泛型类型的新钱包。首先，让我们重写结构体定义：</p>
+<pre><code class="language-cairo noplayground">struct Wallet&lt;T, U&gt; {
+    balance: T,
+    address: U,
+}
+</code></pre>
+<p>接下来，我们将天真地定义 mixup trait 和实现：</p>
+<pre><code class="language-cairo noplayground">// This does not compile!
+trait WalletMixTrait&lt;T1, U1&gt; {
+    fn mixup&lt;T2, U2&gt;(self: Wallet&lt;T1, U1&gt;, other: Wallet&lt;T2, U2&gt;) -&gt; Wallet&lt;T1, U2&gt;;
+}
+
+impl WalletMixImpl&lt;T1, U1&gt; of WalletMixTrait&lt;T1, U1&gt; {
+    fn mixup&lt;T2, U2&gt;(self: Wallet&lt;T1, U1&gt;, other: Wallet&lt;T2, U2&gt;) -&gt; Wallet&lt;T1, U2&gt; {
+        Wallet { balance: self.balance, address: other.address }
+    }
+}
+
+</code></pre>
+<p>我们创建了一个带有 <code>mixup&lt;T2, U2&gt;</code> 方法的 trait <code>WalletMixTrait&lt;T1, U1&gt;</code>，给定 <code>Wallet&lt;T1, U1&gt;</code> 和 <code>Wallet&lt;T2, U2&gt;</code> 的实例，它创建一个新的 <code>Wallet&lt;T1, U2&gt;</code>。正如 <code>mixup</code> 签名所指定的，<code>self</code> 和 <code>other</code> 都在函数结束时被删除，这就是为什么这段代码无法编译的原因。如果你从一开始就跟随到现在，你会知道我们必须为所有泛型类型添加一个要求，指定它们将实现 <code>Drop</code> trait，以便编译器知道如何删除 <code>Wallet&lt;T, U&gt;</code> 的实例。更新后的实现如下：</p>
+<pre><code class="language-cairo">trait WalletMixTrait&lt;T1, U1&gt; {
+    fn mixup&lt;T2, +Drop&lt;T2&gt;, U2, +Drop&lt;U2&gt;&gt;(
+        self: Wallet&lt;T1, U1&gt;, other: Wallet&lt;T2, U2&gt;,
+    ) -&gt; Wallet&lt;T1, U2&gt;;
+}
+
+impl WalletMixImpl&lt;T1, +Drop&lt;T1&gt;, U1, +Drop&lt;U1&gt;&gt; of WalletMixTrait&lt;T1, U1&gt; {
+    fn mixup&lt;T2, +Drop&lt;T2&gt;, U2, +Drop&lt;U2&gt;&gt;(
+        self: Wallet&lt;T1, U1&gt;, other: Wallet&lt;T2, U2&gt;,
+    ) -&gt; Wallet&lt;T1, U2&gt; {
+        Wallet { balance: self.balance, address: other.address }
+    }
+}
+</code></pre>
+<p>我们在 <code>WalletMixImpl</code> 声明中为 <code>T1</code> 和 <code>U1</code> 添加了可删除的要求。然后我们为 <code>T2</code> 和 <code>U2</code> 做同样的事情，这次是作为 <code>mixup</code> 签名的一部分。我们现在可以尝试 <code>mixup</code> 函数：</p>
+<pre><code class="language-cairo noplayground">#[executable]
+fn main() {
+    let w1: Wallet&lt;bool, u128&gt; = Wallet { balance: true, address: 10 };
+    let w2: Wallet&lt;felt252, u8&gt; = Wallet { balance: 32, address: 100 };
+
+    let w3 = w1.mixup(w2);
+
+    assert!(w3.balance);
+    assert!(w3.address == 100);
+}
+</code></pre>
+<p>我们首先创建两个实例：一个 <code>Wallet&lt;bool, u128&gt;</code> 和另一个 <code>Wallet&lt;felt252, u8&gt;</code>。然后，我们调用 <code>mixup</code> 并创建一个新的 <code>Wallet&lt;bool, u8&gt;</code> 实例。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch08-00-generic-types-and-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch08-02-traits-in-cairo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch08-00-generic-types-and-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch08-02-traits-in-cairo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

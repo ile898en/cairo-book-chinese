@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>智能合约简介 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch100-00-introduction-to-smart-contracts.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="meta-在这个为使用-cairo-的开发人员量身定制的全面介绍中探索智能合约的基础知识了解智能合约如何工作以及它们在区块链技术中的作用"><a class="header" href="#meta-在这个为使用-cairo-的开发人员量身定制的全面介绍中探索智能合约的基础知识了解智能合约如何工作以及它们在区块链技术中的作用">meta:
+“在这个为使用 Cairo 的开发人员量身定制的全面介绍中探索智能合约的基础知识。了解智能合约如何工作以及它们在区块链技术中的作用。”</a></h2>
+<h1 id="智能合约简介"><a class="header" href="#智能合约简介">智能合约简介</a></h1>
+<p>本章将为你提供关于什么是智能合约、它们的用途以及为什么区块链开发人员会使用 Cairo 和 Starknet 的高级介绍。如果你已经熟悉区块链编程，请随意跳过本章。不过，最后一部分可能仍然很有趣。</p>
+<h2 id="智能合约---简介"><a class="header" href="#智能合约---简介">智能合约 - 简介</a></h2>
+<p>随着以太坊的诞生，智能合约变得越来越流行和普及。智能合约本质上是部署在区块链上的程序。“智能合约”这个术语有点误导，因为它们既不“智能”也不完全是“合约”，而是根据特定输入执行的代码和指令。它们主要由两个组件组成：存储和函数。一旦部署，用户可以通过启动包含执行数据（调用哪个函数以及使用什么输入）的区块链交易来与智能合约交互。智能合约可以修改和读取底层区块链的存储。智能合约有自己的地址，被认为是一个区块链账户，这意味着它可以持有代币。</p>
+<p>用于编写智能合约的编程语言因区块链而异。例如，在以太坊和 <a href="https://ethereum.org/en/developers/docs/evm/">兼容 EVM 的生态系统</a> 上，最常用的语言是 Solidity，而在 Starknet 上，它是 Cairo。代码编译的方式也根据区块链而有所不同。在以太坊上，Solidity 被编译成字节码。在 Starknet 上，Cairo 被编译成 Sierra，然后编译成 Cairo 汇编 (CASM)。</p>
+<p>智能合约拥有几个独特的特征。它们是 <strong>无需许可的 (permissionless)</strong>，这意味着任何人都可以网络上部署智能合约（当然是在去中心化区块链的背景下）。智能合约也是 <strong>透明的 (transparent)</strong>；任何人都可以访问智能合约存储的数据。组成合约的代码也可以是透明的，从而实现 <strong>可组合性 (composability)</strong>。这允许开发人员编写使用其他智能合约的智能合约。智能合约只能访问和交互其部署所在的区块链上的数据。它们需要第三方软件（称为 <em>预言机 Oracles</em>）来访问外部数据（例如代币的价格）。</p>
+<p>为了让开发人员构建可以相互交互的智能合约，需要知道其他合约是什么样子的。因此，以太坊开发人员开始为智能合约开发建立标准，即 <code>ERCxx</code>。两个最常用和著名的标准是 <code>ERC20</code>（用于构建像 <code>USDC</code>、<code>DAI</code> 或 <code>STARK</code> 这样的代币）和 <code>ERC721</code>（用于像 <code>CryptoPunks</code> 或 <code>Everai</code> 这样的 NFT（非同质化代币））。</p>
+<h2 id="智能合约---用例"><a class="header" href="#智能合约---用例">智能合约 - 用例</a></h2>
+<p>智能合约有许多可能的用例。唯一的限制是区块链的技术约束和开发人员的创造力。</p>
+<h3 id="defi"><a class="header" href="#defi">DeFi</a></h3>
+<p>目前，智能合约的主要用例类似于以太坊或比特币，本质上是处理资金。在比特币承诺的替代支付系统的背景下，以太坊上的智能合约使得创建不再依赖传统金融中介的去中心化金融应用程序成为可能。这就是我们要说的 DeFi（去中心化金融）。DeFi 由各种项目组成，如借贷应用程序、去中心化交易所 (DEX)、链上衍生品、稳定币、去中心化对冲基金、保险等等。</p>
+<h3 id="代币化-tokenization"><a class="header" href="#代币化-tokenization">代币化 (Tokenization)</a></h3>
+<p>智能合约可以促进现实世界资产的代币化，例如房地产、艺术品或贵金属。代币化将资产分割成数字代币，可以在区块链平台上轻松交易和管理。这可以增加流动性，实现部分所有权，并简化买卖过程。</p>
+<h3 id="投票"><a class="header" href="#投票">投票</a></h3>
+<p>智能合约可用于创建安全透明的投票系统。投票可以记录在区块链上，确保不可篡改和透明度。智能合约可以自动统计选票并宣布结果，最大限度地减少欺诈或操纵的可能性。</p>
+<h3 id="版税-royalties"><a class="header" href="#版税-royalties">版税 (Royalties)</a></h3>
+<p>智能合约可以为艺术家、音乐家和其他内容创作者自动支付版税。当消费或出售一份内容时，智能合约可以自动计算并将版税分发给合法的所有者，确保公平的报酬并减少对中介的需求。</p>
+<h3 id="去中心化身份-dids"><a class="header" href="#去中心化身份-dids">去中心化身份 (DIDs)</a></h3>
+<p>智能合约可用于创建和管理数字身份，允许个人控制其个人信息并安全地与第三方共享。智能合约可以验证用户身份的真实性，并根据用户的凭据自动授予或撤销对特定服务的访问权限。</p>
+<br />
+<br />
+随着以太坊的不断成熟，我们可以预期智能合约的用例和应用将进一步扩展，带来令人兴奋的新机会并重塑传统系统，使其变得更好。
+<h2 id="starknet-和-cairo-的兴起"><a class="header" href="#starknet-和-cairo-的兴起">Starknet 和 Cairo 的兴起</a></h2>
+<p>以太坊作为最广泛使用和最具弹性的智能合约平台，成为了其自身成功的受害者。随着一些前面提到的用例（主要是 DeFi）的迅速采用，执行交易的成本变得极高，使得网络几乎无法使用。生态系统中的工程师和研究人员开始致力于解决这种可扩展性问题的解决方案。</p>
+<p>区块链领域一个著名的三难困境（区块链不可能三角）指出，很难同时实现高水平的可扩展性、去中心化和安全性；必须做出权衡。以太坊处于去中心化和安全性的交叉点。最终决定以太坊的目的将是作为一个安全的结算层，而复杂的计算将被转移到建立在以太坊之上的其他网络上。这些被称为 Layer 2 (L2)。
+L2 主要有两种类型：乐观汇总 (optimistic rollups) 和有效性汇总 (validity rollups)。这两种方法都涉及将大量交易压缩和批处理在一起，计算新状态，并将结果结算在以太坊 (L1) 上。区别在于结果在 L1 上结算的方式。对于乐观汇总，新状态默认被认为是有效的，但有一个 7 天的窗口期供节点识别恶意交易。</p>
+<p>相比之下，有效性汇总（如 Starknet）使用密码学来证明新状态已被正确计算。这就是 STARKs 的目的，这种密码学技术可以允许有效性汇总比乐观汇总更显著地扩展。你可以从 Starkware 的 Medium <a href="https://medium.com/starkware/starks-starkex-and-starknet-9a426680745a">文章</a> 中了解有关 STARKs 的更多信息，这是一个很好的入门读物。</p>
+<blockquote>
+<p>Starknet 的架构在 <a href="https://docs.starknet.io/documentation/architecture_and_concepts/">Starknet 文档</a> 中有详细描述，这是了解更多关于 Starknet 网络的绝佳资源。</p>
+</blockquote>
+<p>还记得 Cairo 吗？事实上，它是一种专门为了与 STARKs 一起工作并使它们具有通用性而开发的语言。使用 Cairo，我们可以编写 <strong>可证明代码 (provable code)</strong>。在 Starknet 的背景下，这允许证明从一个状态到另一个状态的计算的正确性。</p>
+<p>与大多数（如果不是全部）选择使用 EVM（按原样或稍作修改）作为基础层的 Starknet 竞争对手不同，Starknet 采用了自己的 VM。这使开发人员从 EVM 的限制中解放出来，开辟了更广泛的可能性。加上交易成本的降低，Starknet 和 Cairo 的结合为开发人员创造了一个令人兴奋的游乐场。原生账户抽象为账户（我们称之为“智能账户”）和交易流实现了更复杂的逻辑。新兴的用例包括 <strong>透明 AI</strong> 和机器学习应用程序。最后，<strong>区块链游戏</strong> 可以完全 <strong>在链上</strong> 开发。Starknet 经过专门设计，旨在最大化 STARK 证明的功能，以此实现最佳的可扩展性。</p>
+<blockquote>
+<p>在 <a href="https://docs.starknet.io/documentation/architecture_and_concepts/Account_Abstraction/introduction/">Starknet 文档</a> 中了解有关账户抽象的更多信息。</p>
+</blockquote>
+<h2 id="cairo-程序和-starknet-智能合约有什么区别"><a class="header" href="#cairo-程序和-starknet-智能合约有什么区别">Cairo 程序和 Starknet 智能合约：有什么区别？</a></h2>
+<p>Starknet 合约是 Cairo 程序的一个特殊超集，因此本书前面学到的概念仍然适用于编写 Starknet 合约。正如你可能已经注意到的，Cairo 程序必须始终有一个用作此程序入口点的 <code>main</code> 函数：</p>
+<pre><code class="language-cairo">fn main() {}
+</code></pre>
+<p>部署在 Starknet 网络上的合约本质上是由定序器 (sequencer) 运行的程序，因此可以访问 Starknet 的状态。合约没有 <code>main</code> 函数，但有一个或多个可用作入口点的函数。</p>
+<p>Starknet 合约在 <a href="./ch07-02-defining-modules-to-control-scope.html">模块</a> 中定义。为了让模块被编译器作为合约处理，它必须用 <code>#[starknet::contract]</code> 属性进行注释。</p>
+<h2 id="简单合约剖析"><a class="header" href="#简单合约剖析">简单合约剖析</a></h2>
+<p>本章将使用一个非常简单的智能合约作为示例，向你介绍 Starknet 合约的基础知识。你将学习如何编写一个允许任何人在 Starknet 区块链上存储单个数字的合约。</p>
+<p>让我们在整章中考虑以下合约。要把它们一次全部理解可能并不容易，但我们会一步一步地进行：</p>
+<pre><code class="language-cairo noplayground">#[starknet::interface]
+trait ISimpleStorage&lt;TContractState&gt; {
+    fn set(ref self: TContractState, x: u128);
+    fn get(self: @TContractState) -&gt; u128;
+}
+
+#[starknet::contract]
+mod SimpleStorage {
+    use starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
+
+    #[storage]
+    struct Storage {
+        stored_data: u128,
+    }
+
+    #[abi(embed_v0)]
+    impl SimpleStorage of super::ISimpleStorage&lt;ContractState&gt; {
+        fn set(ref self: ContractState, x: u128) {
+            self.stored_data.write(x);
+        }
+
+        fn get(self: @ContractState) -&gt; u128 {
+            self.stored_data.read()
+        }
+    }
+}
+</code></pre>
+<p>{{#label simple-contract}} <span class="caption">清单 {{#ref simple-contract}}: 一个简单的存储合约</span></p>
+<h3 id="这个合约是什么"><a class="header" href="#这个合约是什么">这个合约是什么？</a></h3>
+<p>合约是通过将状态和逻辑封装在一个用 <code>#[starknet::contract]</code> 属性注释的模块中来定义的。</p>
+<p>状态是在 <code>Storage</code> 结构体中定义的，并且总是被初始化为空。在这里，我们的结构体包含一个名为 <code>stored_data</code> 的字段，类型为 <code>u128</code>（128 位无符号整数），表明我们的合约可以存储 0 到 \( {2^{128}} - 1 \) 之间的任何数字。</p>
+<p>逻辑是由与状态交互的函数定义的。在这里，我们的合约定义并公开暴露了 <code>set</code> 和 <code>get</code> 函数，可用于修改或检索存储变量的值。你可以把它想象成数据库中的单个插槽，你可以通过调用管理数据库的代码的函数来查询和修改它。</p>
+<h3 id="接口合约的蓝图"><a class="header" href="#接口合约的蓝图">接口：合约的蓝图</a></h3>
+<pre><code class="language-cairo noplayground">#[starknet::interface]
+trait ISimpleStorage&lt;TContractState&gt; {
+    fn set(ref self: TContractState, x: u128);
+    fn get(self: @TContractState) -&gt; u128;
+}
+</code></pre>
+<p>{{#label interface}} <span class="caption">清单 {{#ref interface}}: 一个基本的合约接口</span></p>
+<p>接口代表合约的蓝图。它们定义了合约向外部世界公开的函数，而不包括函数体。在 Cairo 中，它们是通过用 <code>#[starknet::interface]</code> 属性注释 trait 来定义的。该 trait 的所有函数都被视为实现此 trait 的任何合约的公共函数，并且可以从外部世界调用。</p>
+<blockquote>
+<p>合约构造函数不是接口的一部分。内部函数也不是。</p>
+</blockquote>
+<p>所有合约接口都使用通用类型作为 <code>self</code> 参数，代表合约状态。我们在接口中选择将此通用参数命名为 <code>TContractState</code>，但这不是强制性的，可以选择任何名称。</p>
+<p>在我们的接口中，注意 <code>self</code> 参数的通用类型 <code>TContractState</code> 是通过引用传递给 <code>set</code> 函数的。看到 <code>self</code> 参数如果不动地传入合约函数告诉我们该函数可以访问合约的状态。<code>ref</code> 修饰符暗示 <code>self</code> 可能会被修改，这意味着合约的存储变量可能会在 <code>set</code> 函数内部被修改。</p>
+<p>另一方面，<code>get</code> 函数采用 <code>TContractState</code> 的快照，这立即告诉我们它不修改状态（实际上，如果我们试图在 <code>get</code> 函数内修改存储，编译器会报错）。</p>
+<p>通过利用 Cairo 的 <a href="./ch08-02-traits-in-cairo.html">traits &amp; impls</a> 机制，我们可以确保存好的实际实现与其接口匹配。事实上，如果你的合约不符合声明的接口，你将得到一个编译错误。例如，清单 {{#ref wrong-impl}} 显示了 <code>ISimpleStorage</code> 接口的一个错误实现，包含一个稍微不同的 <code>set</code> 函数，其签名不同。</p>
+<pre><code class="language-cairo noplayground">    #[abi(embed_v0)]
+    impl SimpleStorage of super::ISimpleStorage&lt;ContractState&gt; {
+        fn set(ref self: ContractState, x: u256) {
+            self.stored_data.write(x);
+        }
+
+        fn get(self: @ContractState) -&gt; u128 {
+            self.stored_data.read()
+        }
+    }
+</code></pre>
+<p>{{#label wrong-impl}} <span class="caption">清单 {{#ref wrong-impl}}: 合约接口的错误实现。这无法编译，因为 <code>set</code> 的签名与 trait 不匹配。</span></p>
+<p>尝试使用此实现编译合约将导致以下错误：</p>
+<pre><code class="language-shell">error: Interaction with the trait ISimpleStorage resulted in a ppanic.
+ --&gt; contract.cairo:4:1
+trait ISimpleStorage&lt;TContractState&gt; {
+^************************************^
+
+error: The value of the associated item "set" in the trait implementation mismatch the value in the trait.
+ --&gt; contract.cairo:17:5
+    impl SimpleStorage of super::ISimpleStorage&lt;ContractState&gt;{
+    ^*********************************************************^
+
+</code></pre>
+<h3 id="在实现块中定义公共函数"><a class="header" href="#在实现块中定义公共函数">在实现块中定义公共函数</a></h3>
+<p>在我们进一步探讨之前，让我们定义一些术语。</p>
+<ul>
+<li>
+<p>在 Starknet 的语境中，<em>公共函数 (public function)</em> 是向外部世界公开的函数。公共函数可以被任何人调用，无论是从合约外部还是从合约内部。在上面的例子中，<code>set</code> 和 <code>get</code> 是公共函数。</p>
+</li>
+<li>
+<p>我们所说的 <em>外部 (external)</em> 函数是一种公共函数，可以通过 Starknet 交易直接调用，并且可以改变合约的状态。<code>set</code> 是一个外部函数。</p>
+</li>
+<li>
+<p><em>视图 (view)</em> 函数是一种公共函数，通常是只读的，不能改变合约的状态。然而，这个限制只是由编译器强制执行的，而不是由 Starknet 本身强制执行的。我们将在后面的章节讨论其含义。<code>get</code> 是一个视图函数。</p>
+</li>
+</ul>
+<pre><code class="language-cairo noplayground">    #[abi(embed_v0)]
+    impl SimpleStorage of super::ISimpleStorage&lt;ContractState&gt; {
+        fn set(ref self: ContractState, x: u128) {
+            self.stored_data.write(x);
+        }
+
+        fn get(self: @ContractState) -&gt; u128 {
+            self.stored_data.read()
+        }
+    }
+</code></pre>
+<p>{{#label implementation}} <span class="caption">清单 {{#ref implementation}}: <code>SimpleStorage</code> 实现</span></p>
+<p>由于合约接口被定义为 <code>ISimpleStorage</code> trait，为了匹配接口，合约的公共函数必须在此 trait 的实现中定义 —— 这允许我们确保合约的实现与其接口匹配。</p>
+<p>然而，仅仅在实现块中定义函数是不够的。实现块必须用 <code>#[abi(embed_v0)]</code> 属性注释。此属性将此实现中定义的函数公开给外部世界 —— 忘记添加它，你的函数将无法从外部调用。所有在标记为 <code>#[abi(embed_v0)]</code> 的块中定义的函数因此都是 <em>公共函数</em>。</p>
+<p>因为 <code>SimpleStorage</code> 合约被定义为一个模块，我们需要访问父模块中定义的接口。我们可以使用 <code>use</code> 关键字将其带入当前作用域，或者直接使用 <code>super</code> 引用它。</p>
+<p>在编写接口的实现时，trait 方法中的 <code>self</code> 参数 <strong>必须</strong> 是 <code>ContractState</code> 类型。<code>ContractState</code> 类型由编译器生成，并提供对 <code>Storage</code> 结构体中定义的存储变量的访问。此外，<code>ContractState</code> 赋予了我们发出事件的能力。<code>ContractState</code> 这个名字并不奇怪，因为它是合约状态的表示，这就是我们在合约接口 trait 中认为的 <code>self</code>。当 <code>self</code> 是 <code>ContractState</code> 的快照时，只允许读取访问，并且不可能发出事件。</p>
+<h3 id="访问和修改合约状态"><a class="header" href="#访问和修改合约状态">访问和修改合约状态</a></h3>
+<p>通常使用两种方法来访问或修改合约的状态：</p>
+<ul>
+<li><code>read</code>，它返回存储变量的值。此方法在变量本身上调用，不带任何参数。</li>
+</ul>
+<pre><code class="language-cairo noplayground">            self.stored_data.read()
+</code></pre>
+<ul>
+<li><code>write</code>，它允许在存储槽中写入新值。此方法也在变量本身上调用，并接受一个参数，即要写入的值。注意，<code>write</code> 可能接受多个参数，具体取决于存储变量的类型。例如，在映射 (mapping) 上写入需要 2 个参数：键和要写入的值。</li>
+</ul>
+<pre><code class="language-cairo noplayground">            self.stored_data.write(x);
+</code></pre>
+<blockquote>
+<p>提醒：如果合约状态作为快照用 <code>@</code> 传递，而不是用 <code>ref</code> 引用传递，尝试修改合约状态将导致编译错误。</p>
+</blockquote>
+<p>这个合约除了允许任何人存储一个世界上任何人都可以访问的单个数字外，没有做太多事情。任何人都可以用不同的值再次调用 <code>set</code> 并覆盖当前的数字。尽管如此，存储在合约存储中的每个值仍将存储在区块链的历史记录中。在本书的后面，你将看到如何施加访问限制，以便只有你可以更改数字。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="appendix-06-useful-development-tools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch100-01-contracts-classes-and-instances.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="appendix-06-useful-development-tools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch100-01-contracts-classes-and-instances.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

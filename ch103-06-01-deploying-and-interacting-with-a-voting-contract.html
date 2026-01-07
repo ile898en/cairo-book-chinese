@@ -1,0 +1,549 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>部署投票合约并与之交互 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch103-06-01-deploying-and-interacting-with-a-voting-contract.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="部署投票合约并与之交互"><a class="header" href="#部署投票合约并与之交互">部署投票合约并与之交互</a></h1>
+<p>Starknet 中的 <strong><code>Vote</code></strong> 合约首先通过合约的构造函数注册选民。在这个阶段初始化了三个选民，并将他们的地址传递给内部函数 <strong><code>_register_voters</code></strong>。此函数将选民添加到合约的状态中，标记他们已注册并有资格投票。</p>
+<p>在合约中，定义了常量 <strong><code>YES</code></strong> 和 <strong><code>NO</code></strong> 来代表投票选项（分别为 1 和 0）。这些常量通过标准化输入值来促进投票过程。</p>
+<p>一旦注册，选民就可以使用 <strong><code>vote</code></strong> 函数投票，选择 1 (YES) 或 0 (NO) 作为他们的投票。投票时，合约的状态会更新，记录投票并标记选民已投票。这确保了选民无法要在同一提案中再次投票。投票触发 <strong><code>VoteCast</code></strong> 事件，记录该操作。</p>
+<p>合约还监控未经授权的投票尝试。如果检测到未经授权的操作，例如未注册的用户试图投票或用户试图再次投票，则会发出 <strong><code>UnauthorizedAttempt</code></strong> 事件。</p>
+<p>这些函数、状态、常量和事件共同创建了一个结构化的投票系统，在 Starknet 环境中管理从注册到投、事件记录和结果检索的投票生命周期。像 <strong><code>YES</code></strong> 和 <strong><code>NO</code></strong> 这样的常量有助于简化投票过程，而事件在确保透明度和可追溯性方面起着至关重要的作用。</p>
+<p>清单 {{#ref voting_contract}} 详细显示了 <code>Vote</code> 合约：</p>
+<pre><code class="language-cairo noplayground">/// Core Library Imports for the Traits outside the Starknet Contract
+use starknet::ContractAddress;
+
+/// Trait defining the functions that can be implemented or called by the Starknet Contract
+#[starknet::interface]
+trait VoteTrait&lt;T&gt; {
+    /// Returns the current vote status
+    fn get_vote_status(self: @T) -&gt; (u8, u8, u8, u8);
+    /// Checks if the user at the specified address is allowed to vote
+    fn voter_can_vote(self: @T, user_address: ContractAddress) -&gt; bool;
+    /// Checks if the specified address is registered as a voter
+    fn is_voter_registered(self: @T, address: ContractAddress) -&gt; bool;
+    /// Allows a user to vote
+    fn vote(ref self: T, vote: u8);
+}
+
+/// Starknet Contract allowing three registered voters to vote on a proposal
+#[starknet::contract]
+mod Vote {
+    use starknet::storage::{
+        Map, StorageMapReadAccess, StorageMapWriteAccess, StoragePointerReadAccess,
+        StoragePointerWriteAccess,
+    };
+    use starknet::{ContractAddress, get_caller_address};
+
+    const YES: u8 = 1_u8;
+    const NO: u8 = 0_u8;
+
+    #[storage]
+    struct Storage {
+        yes_votes: u8,
+        no_votes: u8,
+        can_vote: Map&lt;ContractAddress, bool&gt;,
+        registered_voter: Map&lt;ContractAddress, bool&gt;,
+    }
+
+    #[constructor]
+    fn constructor(
+        ref self: ContractState,
+        voter_1: ContractAddress,
+        voter_2: ContractAddress,
+        voter_3: ContractAddress,
+    ) {
+        self._register_voters(voter_1, voter_2, voter_3);
+
+        self.yes_votes.write(0_u8);
+        self.no_votes.write(0_u8);
+    }
+
+    #[event]
+    #[derive(Drop, starknet::Event)]
+    enum Event {
+        VoteCast: VoteCast,
+        UnauthorizedAttempt: UnauthorizedAttempt,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct VoteCast {
+        voter: ContractAddress,
+        vote: u8,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    struct UnauthorizedAttempt {
+        unauthorized_address: ContractAddress,
+    }
+
+    #[abi(embed_v0)]
+    impl VoteImpl of super::VoteTrait&lt;ContractState&gt; {
+        fn get_vote_status(self: @ContractState) -&gt; (u8, u8, u8, u8) {
+            let (n_yes, n_no) = self._get_voting_result();
+            let (yes_percentage, no_percentage) = self._get_voting_result_in_percentage();
+            (n_yes, n_no, yes_percentage, no_percentage)
+        }
+
+        fn voter_can_vote(self: @ContractState, user_address: ContractAddress) -&gt; bool {
+            self.can_vote.read(user_address)
+        }
+
+        fn is_voter_registered(self: @ContractState, address: ContractAddress) -&gt; bool {
+            self.registered_voter.read(address)
+        }
+
+        fn vote(ref self: ContractState, vote: u8) {
+            assert!(vote == NO || vote == YES, "VOTE_0_OR_1");
+            let caller: ContractAddress = get_caller_address();
+            self._assert_allowed(caller);
+            self.can_vote.write(caller, false);
+
+            if (vote == NO) {
+                self.no_votes.write(self.no_votes.read() + 1_u8);
+            }
+            if (vote == YES) {
+                self.yes_votes.write(self.yes_votes.read() + 1_u8);
+            }
+
+            self.emit(VoteCast { voter: caller, vote: vote });
+        }
+    }
+
+    #[generate_trait]
+    impl InternalFunctions of InternalFunctionsTrait {
+        fn _register_voters(
+            ref self: ContractState,
+            voter_1: ContractAddress,
+            voter_2: ContractAddress,
+            voter_3: ContractAddress,
+        ) {
+            self.registered_voter.write(voter_1, true);
+            self.can_vote.write(voter_1, true);
+
+            self.registered_voter.write(voter_2, true);
+            self.can_vote.write(voter_2, true);
+
+            self.registered_voter.write(voter_3, true);
+            self.can_vote.write(voter_3, true);
+        }
+    }
+
+    #[generate_trait]
+    impl AssertsImpl of AssertsTrait {
+        fn _assert_allowed(ref self: ContractState, address: ContractAddress) {
+            let is_voter: bool = self.registered_voter.read((address));
+            let can_vote: bool = self.can_vote.read((address));
+
+            if (!can_vote) {
+                self.emit(UnauthorizedAttempt { unauthorized_address: address });
+            }
+
+            assert!(is_voter, "USER_NOT_REGISTERED");
+            assert!(can_vote, "USER_ALREADY_VOTED");
+        }
+    }
+
+    #[generate_trait]
+    impl VoteResultFunctionsImpl of VoteResultFunctionsTrait {
+        fn _get_voting_result(self: @ContractState) -&gt; (u8, u8) {
+            let n_yes: u8 = self.yes_votes.read();
+            let n_no: u8 = self.no_votes.read();
+
+            (n_yes, n_no)
+        }
+
+        fn _get_voting_result_in_percentage(self: @ContractState) -&gt; (u8, u8) {
+            let n_yes: u8 = self.yes_votes.read();
+            let n_no: u8 = self.no_votes.read();
+
+            let total_votes: u8 = n_yes + n_no;
+
+            if (total_votes == 0_u8) {
+                return (0, 0);
+            }
+            let yes_percentage: u8 = (n_yes * 100_u8) / (total_votes);
+            let no_percentage: u8 = (n_no * 100_u8) / (total_votes);
+
+            (yes_percentage, no_percentage)
+        }
+    }
+}
+</code></pre>
+<p>{{#label voting_contract}} <span class="caption">清单 {{#ref voting_contract}}: 一个投票智能合约</span></p>
+<h2 id="部署调用和-invoke-投票合约"><a class="header" href="#部署调用和-invoke-投票合约">部署、调用和 Invoke 投票合约</a></h2>
+<p>Starknet 体验的一部分是部署智能合约并与之交互。</p>
+<p>一旦合约部署完毕，我们可以通过调用 (calling) 和 Invoke (invoking) 其函数与之交互：</p>
+<ul>
+<li>调用合约：与仅从状态读取的外部函数交互。这些函数不会改变网络的状态，所以它们不需要费用或签名。</li>
+<li>Invoke 合约：与可以写入状态的外部函数交互。这些函数确实会改变网络的状态，并需要费用和签名。</li>
+</ul>
+<p>我们将使用 <code>katana</code> 设置本地开发节点来部署投票合约。然后，我们将通过调用和 Invoke 其函数与合约进行交互。你也可以使用 Goerli 测试网代替 <code>katana</code>。但是，我们建议使用 <code>katana</code> 进行本地开发和测试。你可以在 Starknet 文档的 <a href="https://docs.starknet.io/quick-start/using_devnet/">“使用开发网络”</a> 一章中找到 <code>katana</code> 的完整教程。</p>
+<h3 id="katana-本地-starknet-节点"><a class="header" href="#katana-本地-starknet-节点"><code>katana</code> 本地 Starknet 节点</a></h3>
+<p><code>katana</code> 由 <a href="https://book.dojoengine.org/toolchain/katana">Dojo 团队</a> 设计，旨在支持本地开发。它将允许你做所有你需要用 Starknet 做的事情，但是在本地。这是一个用于开发和测试的很棒的工具。</p>
+<p>要从源代码安装 <code>katana</code>，请参阅 Dojo 引擎的 <a href="https://book.dojoengine.org/toolchain/katana#getting-started">“使用 Katana”</a> 一章。</p>
+<blockquote>
+<p>注意：请验证 <code>katana</code> 的版本是否与下面提供的指定版本匹配。</p>
+<pre><code class="language-bash">$ katana --version
+katana 1.0.9-dev (38b3c2a6)
+</code></pre>
+<p>要升级 <code>katana</code> 版本，请参阅 Dojo 引擎的 <a href="https://book.dojoengine.org/toolchain/katana#getting-started">“使用 Katana”</a> 一章。</p>
+</blockquote>
+<p>一旦安装了 <code>katana</code>，你可以使用以下命令启动本地 Starknet 节点：</p>
+<pre><code class="language-bash">katana
+</code></pre>
+<p>此命令将启动一个带有预部署账户的本地 Starknet 节点。我们将使用这些账户来部署投票合约并与之交互：</p>
+<pre><code class="language-bash">...
+PREFUNDED ACCOUNTS
+==================
+
+| Account address |  0x03ee9e18edc71a6df30ac3aca2e0b02a198fbce19b7480a63a0d71cbd76652e0
+| Private key     |  0x0300001800000000300000180000000000030000000000003006001800006600
+| Public key      |  0x01b7b37a580d91bc3ad4f9933ed61f3a395e0e51c9dd5553323b8ca3942bb44e
+
+| Account address |  0x033c627a3e5213790e246a917770ce23d7e562baa5b4d2917c23b1be6d91961c
+| Private key     |  0x0333803103001800039980190300d206608b0070db0012135bd1fb5f6282170b
+| Public key      |  0x04486e2308ef3513531042acb8ead377b887af16bd4cdd8149812dfef1ba924d
+
+| Account address |  0x01d98d835e43b032254ffbef0f150c5606fa9c5c9310b1fae370ab956a7919f5
+| Private key     |  0x07ca856005bee0329def368d34a6711b2d95b09ef9740ebf2c7c7e3b16c1ca9c
+| Public key      |  0x07006c42b1cfc8bd45710646a0bb3534b182e83c313c7bc88ecf33b53ba4bcbc
+...
+</code></pre>
+<p>在我们与投票合约交互之前，我们需要在 Starknet 上准备好选民和管理员账户。每个选民账户必须注册并为投票提供足够的资金。要更详细地了解账户如何通过账户抽象进行操作，请参阅 Starknet 文档的 <a href="https://docs.starknet.io/architecture-and-concepts/accounts/introduction/#account_abstraction">“账户抽象”</a> 一章。</p>
+<h3 id="用于投票的智能钱包"><a class="header" href="#用于投票的智能钱包">用于投票的智能钱包</a></h3>
+<p>除了 Scarb 之外，你还需要安装 Starkli。Starkli 是一个命令行工具，允许你与 Starknet 交互。你可以在 Starknet 文档的 <a href="https://docs.starknet.io/quick-start/environment-setup/">“设置 Starkli”</a> 一章中找到安装说明。</p>
+<blockquote>
+<p>注意：请验证 <code>starkli</code> 的版本是否与下面提供的指定版本匹配。</p>
+<pre><code class="language-bash">$ starkli --version
+0.3.6 (8d6db8c)
+</code></pre>
+<p>要升级 <code>starkli</code> 到 <code>0.3.6</code>，请使用 <code>starkliup -v 0.3.6</code> 命令，或者简单地使用 <code>starkliup</code> 安装最新的稳定版本。</p>
+</blockquote>
+<p>你可以使用以下命令检索智能钱包类哈希（对于你所有的智能钱包都是一样的）。注意使用 <code>--rpc</code> 标志和 <code>katana</code> 提供的 RPC 端点：</p>
+<pre><code>starkli class-hash-at &lt;SMART_WALLET_ADDRESS&gt; --rpc http://0.0.0.0:5050
+</code></pre>
+<h3 id="合约部署"><a class="header" href="#合约部署">合约部署</a></h3>
+<p>在部署之前，我们需要声明合约。我们可以使用 <code>starkli declare</code> 命令来完成：</p>
+<pre><code class="language-bash">starkli declare target/dev/listing_99_12_vote_contract_Vote.contract_class.json --rpc http://0.0.0.0:5050 --account katana-0
+</code></pre>
+<p>如果你使用的编译器版本早于 Starkli 使用的版本，并且在使用上述命令时遇到 <code>compiler-version</code> 错误，你可以通过添加 <code>--compiler-version x.y.z</code> 标志在命令中指定要使用的编译器版本。</p>
+<p>如果你仍然遇到编译器版本问题，请尝试使用命令 <code>starkliup</code> 升级 Starkli，以确保你使用的是最新版本的 starkli。</p>
+<p>合约的类哈希是：
+<code>0x06974677a079b7edfadcd70aa4d12aac0263a4cda379009fca125e0ab1a9ba52</code>。你可以在 Sepolia 测试网上声明此合约，并查看类哈希是否对应。</p>
+<p><code>--rpc</code> 标志指定要使用的 RPC 端点（<code>katana</code> 提供的那个）。<code>--account</code> 标志指定用于签署交易的账户。</p>
+<p>由于我们使用的是本地节点，交易将立即实现最终性。如果你使用的是 Goerli 测试网，你需要等待交易最终确认，这通常需要几秒钟。</p>
+<p>以下命令部署投票合约并将 voter_0、voter_1 和 voter_2 注册为合格选民。这些是构造函数参数，所以添加一个你以后可以用来投票的选民账户。</p>
+<pre><code class="language-bash">starkli deploy &lt;class_hash_of_the_contract_to_be_deployed&gt; &lt;voter_0_address&gt; &lt;voter_1_address&gt; &lt;voter_2_address&gt; --rpc http://0.0.0.0:5050 --account katana-0
+</code></pre>
+<p>一个示例命令：</p>
+<pre><code class="language-bash">starkli deploy 0x06974677a079b7edfadcd70aa4d12aac0263a4cda379009fca125e0ab1a9ba52 0x03ee9e18edc71a6df30ac3aca2e0b02a198fbce19b7480a63a0d71cbd76652e0 0x033c627a3e5213790e246a917770ce23d7e562baa5b4d2917c23b1be6d91961c 0x01d98d835e43b032254ffbef0f150c5606fa9c5c9310b1fae370ab956a7919f5 --rpc http://0.0.0.0:5050 --account katana-0
+</code></pre>
+<p>在这种情况下，合约已部署在特定地址：
+<code>0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349</code>。对你来说，这个地址会有所不同。我们将使用此地址与合约进行交互。</p>
+<h3 id="选民资格验证"><a class="header" href="#选民资格验证">选民资格验证</a></h3>
+<p>在我们的投票合约中，我们有两个函数来验证选民资格，<code>voter_can_vote</code> 和 <code>is_voter_registered</code>。这些是外部读取函数，这意味着它们不会改变合约的状态，而只是读取当前状态。</p>
+<p><code>is_voter_registered</code> 函数检查特定地址是否在合约中注册为合格选民。另一方面，<code>voter_can_vote</code> 函数检查特定地址的选民当前是否有资格投票，即他们已注册且尚未投票。</p>
+<p>你可以使用 <code>starkli call</code> 命令调用这些函数。注意，<code>call</code> 命令用于读取函数，而 <code>invoke</code> 命令用于也可以写入存储的函数。<code>call</code> 命令不需要签名，而 <code>invoke</code> 命令需要。</p>
+<pre><code class="language-bash+">starkli call 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 voter_can_vote 0x03ee9e18edc71a6df30ac3aca2e0b02a198fbce19b7480a63a0d71cbd76652e0 --rpc http://0.0.0.0:5050
+</code></pre>
+<p>首先我们添加了合约的地址，然后是我们想要调用的函数，最后是函数的输入。在这种情况下，我们正在检查地址为
+<code>0x03ee9e18edc71a6df30ac3aca2e0b02a198fbce19b7480a63a0d71cbd76652e0</code> 的选民是否可以投票。</p>
+<p>由于我们提供了一个已注册的选民地址作为输入，结果为 1（布尔值真），表明选民有资格投票。</p>
+<p>接下来，让我们使用未注册的帐户地址调用 <code>is_voter_registered</code> 函数以观察输出：</p>
+<pre><code class="language-bash">starkli call 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 is_voter_registered 0x44444444444444444 --rpc http://0.0.0.0:5050
+</code></pre>
+<p>使用未注册的帐户地址，终端输出为 0（即 false），确该帐户没有资格投票。</p>
+<h3 id="投票"><a class="header" href="#投票">投票</a></h3>
+<p>既然我们已经确定了如何验证选民资格，我们就可以投票了！要投票，我们与 <code>vote</code> 函数交互，该函数被标记为 external，必须使用 <code>starknet invoke</code> 命令。</p>
+<p><code>invoke</code> 命令语法类似于 <code>call</code> 命令，但对于投票，我们提交 <code>1</code>（赞成）或 <code>0</code>（反对）作为我们的输入。当我们调用 <code>vote</code> 函数时，我们将被收取费用，并且交易必须由选民签署；我们正在写入合约的存储。</p>
+<pre><code class="language-bash">//投赞成票
+starkli invoke 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 vote 1 --rpc http://0.0.0.0:5050 --account katana-0
+
+//投反对票
+starkli invoke 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 vote 0 --rpc http://0.0.0.0:5050 --account katana-0
+</code></pre>
+<p>系统将提示你输入签名者的密码。输入密码后，交易将被签名并提交到 Starknet 网络。你将收到交易哈希作为输出。使用 starkli 交易命令，你可以获得有关交易的更多详细信息：</p>
+<pre><code class="language-bash">starkli transaction &lt;TRANSACTION_HASH&gt; --rpc http://0.0.0.0:5050
+</code></pre>
+<p>这返回：</p>
+<pre><code class="language-bash">{
+  "transaction_hash": "0x5604a97922b6811060e70ed0b40959ea9e20c726220b526ec690de8923907fd",
+  "max_fee": "0x430e81",
+  "version": "0x1",
+  "signature": [
+    "0x75e5e4880d7a8301b35ff4a1ed1e3d72fffefa64bb6c306c314496e6e402d57",
+    "0xbb6c459b395a535dcd00d8ab13d7ed71273da4a8e9c1f4afe9b9f4254a6f51"
+  ],
+  "nonce": "0x3",
+  "type": "INVOKE",
+  "sender_address": "0x3ee9e18edc71a6df30ac3aca2e0b02a198fbce19b7480a63a0d71cbd76652e0",
+  "calldata": [
+    "0x1",
+    "0x5ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349",
+    "0x132bdf85fc8aa10ac3c22f02317f8f53d4b4f52235ed1eabb3a4cbbe08b5c41",
+    "0x0",
+    "0x1",
+    "0x1",
+    "0x1"
+  ]
+}
+</code></pre>
+<p>如果你尝试使用同一个签名者投票两次，你会得到一个错误：</p>
+<pre><code class="language-bash">Error: code=ContractError, message="Contract error"
+</code></pre>
+<p>这个错误信息不是很有用，但是你可以查看你启动 <code>katana</code>（我们的本地 Starknet 节点）的终端中的输出以获取更多详细信息：</p>
+<pre><code class="language-bash">...
+Transaction execution error: "Error in the called contract (0x03ee9e18edc71a6df30ac3aca2e0b02a198fbce19b7480a63a0d71cbd76652e0):
+    Error at pc=0:81:
+    Got an exception while executing a hint: Custom Hint Error: Execution failed. Failure reason: \"USER_ALREADY_VOTED\".
+    ...
+</code></pre>
+<p>错误的键是 <code>USER_ALREADY_VOTED</code>。</p>
+<pre><code class="language-bash">assert!(can_vote, "USER_ALREADY_VOTED");
+</code></pre>
+<p>我们可以重复此过程，为我们想要用来投票的帐户创建签名者和帐户描述符。请记住，每个签名者必须从私钥创建，每个帐户描述符必须从公钥、智能钱包地址和智能钱包类哈希（对于每个选民都是相同的）创建。</p>
+<pre><code class="language-bash">starkli invoke 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 vote 0 --rpc http://0.0.0.0:5050 --account katana-0
+
+starkli invoke 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 vote 1 --rpc http://0.0.0.0:5050 --account katana-0
+</code></pre>
+<h3 id="可视化投票结果"><a class="header" href="#可视化投票结果">可视化投票结果</a></h3>
+<p>要检查投票结果，我们通过 <code>starknet call</code> 命令调用 <code>get_vote_status</code> 函数，这是另一个视图函数。</p>
+<pre><code class="language-bash">starkli call 0x05ea3a690be71c7fcd83945517f82e8861a97d42fca8ec9a2c46831d11f33349 get_vote_status --rpc http://0.0.0.0:5050
+</code></pre>
+<p>输出显示了“赞成”和“反对”票的统计以及它们的相对百分比。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch103-06-00-other-examples.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch103-06-02-working-with-erc20-token.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch103-06-00-other-examples.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch103-06-02-working-with-erc20-token.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

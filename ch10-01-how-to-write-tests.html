@@ -1,0 +1,974 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>如何编写测试 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch10-01-how-to-write-tests.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="如何编写测试"><a class="header" href="#如何编写测试">如何编写测试</a></h1>
+<h2 id="测试函数的解剖结构"><a class="header" href="#测试函数的解剖结构">测试函数的解剖结构</a></h2>
+<p>测试是 Cairo 函数，用于验证非测试代码是否按预期方式运行。测试函数的主体通常执行以下三个操作：</p>
+<ul>
+<li>设置任何所需的数据或状态。</li>
+<li>运行你想要测试的代码。</li>
+<li>断言结果是否符合你的预期。</li>
+</ul>
+<p>让我们看看 Cairo 提供的用于编写执行这些操作的测试的功能，其中包括：</p>
+<ul>
+<li><code>#[test]</code> 属性。</li>
+<li><code>assert!</code> 宏。</li>
+<li><code>assert_eq!</code>, <code>assert_ne!</code>, <code>assert_lt!</code>, <code>assert_le!</code>, <code>assert_gt!</code> 和 <code>assert_ge!</code> 宏。为了使用它们，如果你使用的是旧版本，可能需要添加 <code>assert_macros</code> 依赖，但在最新版本中通常已包含（注：原文提到 dev dependency，视具体 Scarb 版本而定）。</li>
+<li><code>#[should_panic]</code> 属性。</li>
+</ul>
+<blockquote>
+<p>注意：确在创建项目时选择 Starknet Foundry 作为测试运行器。</p>
+</blockquote>
+<h3 id="测试函数的解剖结构-1"><a class="header" href="#测试函数的解剖结构-1">测试函数的解剖结构</a></h3>
+<p>最简单地说，Cairo 中的测试是一个带有 <code>#[test]</code> 属性注释的函数。属性是关于 Cairo 代码片段的元数据；一个例子是我们在 <a href="./ch05-01-defining-and-instantiating-structs.html">第 {{#chap using-structs-to-structure-related-data}} 章</a> 中对结构体使用的 <code>#[derive()]</code> 属性。要将函数更改为测试函数，请在 <code>fn</code> 之前的一行添加 <code>#[test]</code>。当你使用 <code>scarb test</code> 命令运行测试时，Scarb 会运行 Starknet Foundry 的测试运行器二进制文件，该文件运行带注释的函数并报告每个测试函数是通过还是失败。</p>
+<p>让我们使用 Scarb 创建一个名为 <em>adder</em> 的新项目，命令为 <code>scarb new adder</code>。删除 <em>tests</em> 文件夹。</p>
+<pre><code class="language-shell">adder
+├── Scarb.toml
+└── src
+    └── lib.cairo
+</code></pre>
+<p>在 <em>lib.cairo</em> 中，让我们删除现有内容并添加一个包含第一个测试的 <code>tests</code> 模块，如清单 {{#ref first-test}} 所示。</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+}
+</code></pre>
+<p>{{#label first-test}} <span class="caption">清单 {{#ref first-test}}: 一个简单的测试函数</span></p>
+<p>注意 <code>#[test]</code> 注释：此属性指示这是一个测试函数，因此测试运行器知道将此函数视为测试。我们可能还有非测试函数来帮助设置常见场景或执行常见操作，因此我们总是需要指明哪些函数是测试。</p>
+<p>我们需要对 <code>tests</code> 模块使用 <code>#[cfg(test)]</code> 属性，以便编译器知道它包含的代码只需在运行测试时编译。这实际上不是一个选项：如果你在 <em>lib.cairo</em> 文件中放置一个带有 <code>#[test]</code> 属性的简单测试，它将不会编译。我们将在下一节 <a href="./ch10-02-test-organization.html">测试组织</a> 中更多地讨论 <code>#[cfg(test)]</code> 属性。</p>
+<p>示例函数体使用了 <code>assert_eq!</code> 宏，它断言 2 加 2 的结果等于 4。此断言用作典型测试格式的示例。我们稍后将在本章中更详细地解释 <code>assert_eq!</code> 的工作原理。让我们运行它看看这个测试是否通过。</p>
+<p><code>scarb test</code> 命令运行在我们的项目中找到的所有测试，并显示以下输出：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_10_01 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_01_unittest) listing_10_01 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_01/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from listing_10_01 package
+Running 2 test(s) from src/
+[PASS] listing_10_01::other_tests::exploration (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+[PASS] listing_10_01::tests::it_works (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 2 passed, 0 failed, 0 ignored, 0 filtered out
+
+
+</code></pre>
+<p><code>scarb test</code> 编译并运行了测试。我们看到行 <code>Collected 1 test(s) from adder package</code> 后面是行 <code>Running 1 test(s) from src/</code>。下一行显示了称为 <code>it_works</code> 的测试函数的名称，并且该测试的运行结果是 <code>ok</code>。测试运行器还提供了 Gas 消耗的估算。总体摘要显示所有测试都已通过，<code>1 passed; 0 failed</code> 部分统计了通过或失败的测试数量。</p>
+<p>可以将测试标记为忽略，以便它不会在特定实例中运行；我们将在本章稍后的 <a href="#ignoring-some-tests-unless-specifically-requested">除非特别请求，否则忽略某些测试</a> 部分中介绍这一点。因为我们在这里没有这样做，所以摘要显示 <code>0 ignored</code>。我们还可以向 <code>scarb test</code> 命令传递参数，以仅运行名称与字符串匹配的测试；这称为过滤，我们将在 <a href="#running-single-tests">运行单个测试</a> 部分中介绍这一点。由于我们没有过滤正在运行的测试，因此摘要末尾显示 <code>0 filtered out</code>。</p>
+<p>让我们开始根据我们自己的需求自定义测试。首先将 <code>it_works</code> 函数的名称更改为不同的名称，例如 <code>exploration</code>，如下所示：</p>
+<pre><code class="language-cairo noplayground">    #[test]
+    fn exploration() {
+        let result = 2 + 2;
+        assert_eq!(result, 4);
+    }
+</code></pre>
+<p>然后再次运行 <code>scarb test</code>。现在的输出显示 <code>exploration</code> 而不是 <code>it_works</code>：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_10_01 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_01_unittest) listing_10_01 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_01/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from listing_10_01 package
+Running 2 test(s) from src/
+[PASS] listing_10_01::other_tests::exploration (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+[PASS] listing_10_01::tests::it_works (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 2 passed, 0 failed, 0 ignored, 0 filtered out
+
+
+</code></pre>
+<p>现在我们将添加另一个测试，但这次我们将制作一个失败的测试！当测试函数中的某些内容 panic 时，测试失败。每个测试都在新线程中运行，当主线程看到测试线程已死亡时，测试被标记为失败。输入名为 <code>another</code> 的新测试作为函数，以便你的 <em>src/lib.cairo</em> 文件看起来像清单 {{#ref second-test}} 中那样。</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">#[cfg(test)]
+mod tests {
+    #[test]
+    fn exploration() {
+        let result = 2 + 2;
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn another() {
+        let result = 2 + 2;
+        assert!(result == 6, "Make this test fail");
+    }
+}
+</code></pre>
+<p>{{#label second-test}} <span class="caption">清单 {{#ref second-test}}:
+在 <em>lib.cairo</em> 中添加第二个将失败的测试</span></p>
+<p>运行 <code>scarb test</code>，你将看到以下输出：</p>
+<pre><code class="language-shell">Collected 2 test(s) from adder package
+Running 2 test(s) from src/
+[FAIL] adder::tests::another
+
+Failure data:
+    "Make this test fail"
+
+[PASS] adder::tests::exploration (gas: ~1)
+Tests: 1 passed, 1 failed, 0 skipped, 0 ignored, 0 filtered out
+
+Failures:
+    adder::tests::another
+</code></pre>
+<p><code>adder::tests::another</code> 行显示的不是 <code>[PASS]</code>，而是 <code>[FAIL]</code>。一个新的部分出现在单个结果和摘要之间。它显示了每个测试失败的详细原因。在这种情况下，我们得到的细节是 <code>another</code> 失败了，因为它使用 <code>"Make this test fail"</code> 错误 panic 了。</p>
+<p>之后，显示摘要行：我们有一个测试通过，一个测试失败。最后，我们看到失败测试的列表。</p>
+<p>现在你已经看到了测试结果在不同场景下的样子，让我们看看一些在测试中有用的函数。</p>
+<h2 id="使用-assert-宏检查结果"><a class="header" href="#使用-assert-宏检查结果">使用 <code>assert!</code> 宏检查结果</a></h2>
+<p>Cairo 提供的 <code>assert!</code> 宏在你想要确保测试中的某些条件评估为 <code>true</code> 时很有用。我们给 <code>assert!</code> 宏的第一个参数评估为布尔值。如果值为 <code>true</code>，则不发生任何事情，测试通过。如果值为 <code>false</code>，则 <code>assert!</code> 宏调用 <code>panic()</code> 导致测试失败，并带有我们定义为第二个参数的消息。使用 <code>assert!</code> 宏有助于我们检查代码是否按我们预期的方式运行。</p>
+<p>还记得在 <a href="./ch05-03-method-syntax.html">第 {{#chap using-structs-to-structure-related-data}} 章</a> 中，我们使用了 <code>Rectangle</code> 结构体和 <code>can_hold</code> 方法，这里在清单 {{#ref rectangle}} 中重复。让我们将此代码放在 <em>src/lib.cairo</em> 文件中，然后使用 <code>assert!</code> 宏为它编写一些测试。</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">#[derive(Drop)]
+struct Rectangle {
+    width: u64,
+    height: u64,
+}
+
+trait RectangleTrait {
+    fn can_hold(self: @Rectangle, other: @Rectangle) -&gt; bool;
+}
+
+impl RectangleImpl of RectangleTrait {
+    fn can_hold(self: @Rectangle, other: @Rectangle) -&gt; bool {
+        *self.width &gt; *other.width &amp;&amp; *self.height &gt; *other.height
+    }
+}
+</code></pre>
+<p>{{#label rectangle}} <span class="caption">清单 {{#ref rectangle}}: 使用 <a href="./ch05-01-defining-and-instantiating-structs.html">第 {{#chap using-structs-to-structure-related-data}} 章</a> 中的 <code>Rectangle</code> 结构体及其 <code>can_hold</code> 方法</span></p>
+<p><code>can_hold</code> 方法返回一个 <code>bool</code>，这意味着它是 <code>assert!</code> 宏的完美用例。我们可以通过创建一个宽度为 <code>8</code> 高度为 <code>7</code> 的 <code>Rectangle</code> 实例，并断言它可以容纳另一个宽度为 <code>5</code> 高度为 <code>1</code> 的 <code>Rectangle</code> 实例来编写一个测试来练习 <code>can_hold</code> 方法。</p>
+<pre><code class="language-cairo noplayground">#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn larger_can_hold_smaller() {
+        let larger = Rectangle { height: 7, width: 8 };
+        let smaller = Rectangle { height: 1, width: 5 };
+
+        assert!(larger.can_hold(@smaller), "rectangle cannot hold");
+    }
+}
+</code></pre>
+<p>注意 <code>tests</code> 模块内的 <code>use super::*;</code> 行。<code>tests</code> 模块是一个常规模块，它遵循我们在第 {{#chap paths-for-referring-to-an-item-in-the-module-tree}} 章的 <a href="./ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">“引用模块树中项目的路径”</a><!-- ignore --> 部分中介绍的常规可见性规则。因为 <code>tests</code> 模块是一个内部模块，我们需要将外部模块中的待测试代码引入内部模块的范围。我们在这里使用了一个 glob，所以我们在外部模块中定义的任何东西都对此 <code>tests</code> 模块可用。</p>
+<p>如果你没有将测试模块命名为 <code>tests</code>，你可能不需要 <code>use super::*;</code>，但这取决于你的模块结构。</p>
+<p>我们将测试命名为 <code>larger_can_hold_smaller</code>，并创建了我们需要的两个 <code>Rectangle</code> 实例。然后我们调用 <code>assert!</code> 宏并传递调用 <code>larger.can_hold(@smaller)</code> 的结果。此表达式应该返回 <code>true</code>，所以我们的测试应该通过。让我们来看看！</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_10_03 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_03_unittest) listing_10_03 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_03/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from listing_10_03 package
+Running 2 test(s) from src/
+[PASS] listing_10_03::tests2::smaller_cannot_hold_larger (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+[PASS] listing_10_03::tests::larger_can_hold_smaller (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 2 passed, 0 failed, 0 ignored, 0 filtered out
+
+
+</code></pre>
+<p>它确实通过了！让我们添加另一个测试，这次断言一个较小的矩形不能容纳一个较大的矩形：</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">    #[test]
+    fn smaller_cannot_hold_larger() {
+        let larger = Rectangle { height: 7, width: 8 };
+        let smaller = Rectangle { height: 1, width: 5 };
+
+        assert!(!smaller.can_hold(@larger), "rectangle cannot hold");
+    }
+</code></pre>
+<p>{{#label another-test}} <span class="caption">清单 {{#ref another-test}}:
+在 <em>lib.cairo</em> 中添加另一个将通过的测试</span></p>
+<p>因为在这种情况下 <code>can_hold</code> 方法的正确结果是 <code>false</code>，我们需要在将其传递给 <code>assert!</code> 宏之前否定该结果。因此，如果 <code>can_hold</code> 返回 <code>false</code>，我们的测试将通过：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_10_03 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_03_unittest) listing_10_03 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_03/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from listing_10_03 package
+Running 2 test(s) from src/
+[PASS] listing_10_03::tests2::smaller_cannot_hold_larger (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+[PASS] listing_10_03::tests::larger_can_hold_smaller (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 2 passed, 0 failed, 0 ignored, 0 filtered out
+
+
+</code></pre>
+<p>两个测试都通过了！现在让我们看看当我们在代码中引入错误时，我们的测试记过会发生什么。我们将通过在比较宽度时将 <code>&gt;</code> 符号替换为 <code>&lt;</code> 符号来更改 <code>can_hold</code> 方法的实现：</p>
+<pre><code class="language-cairo noplayground">impl RectangleImpl of RectangleTrait {
+    fn can_hold(self: @Rectangle, other: @Rectangle) -&gt; bool {
+        *self.width &lt; *other.width &amp;&amp; *self.height &gt; *other.height
+    }
+}
+</code></pre>
+<p>现在运行测试会产生以下结果：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test no_listing_01_wrong_can_hold_impl (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(no_listing_01_wrong_can_hold_impl_unittest) no_listing_01_wrong_can_hold_impl v0.1.0 (listings/ch10-testing-cairo-programs/no_listing_01_wrong_can_hold_impl/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from no_listing_01_wrong_can_hold_impl package
+Running 2 test(s) from src/
+[FAIL] no_listing_01_wrong_can_hold_impl::tests::larger_can_hold_smaller
+
+Failure data:
+    "rectangle cannot hold"
+
+[PASS] no_listing_01_wrong_can_hold_impl::tests2::smaller_cannot_hold_larger (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 1 passed, 1 failed, 0 ignored, 0 filtered out
+
+Failures:
+    no_listing_01_wrong_can_hold_impl::tests::larger_can_hold_smaller
+
+</code></pre>
+<p>我们的测试捕获了错误！因为 <code>larger.width</code> 是 <code>8</code> 且 <code>smaller.width</code> 是 <code>5</code>，在 <code>larger_can_hold_smaller</code> 测试中，<code>can_hold</code> 中的宽度比较现在返回 <code>false</code>（<code>8</code> 不小于 <code>5</code>）。注意 <code>smaller_cannot_hold_larger</code> 测试仍然通过：要使此测试失败，高度比较也应该在 <code>can_hold</code> 方法中修改，将 <code>&gt;</code> 符号替换为 <code>&lt;</code> 符号。</p>
+<h2 id="使用-assert_xx-宏测试相等性和比较"><a class="header" href="#使用-assert_xx-宏测试相等性和比较">使用 <code>assert_xx!</code> 宏测试相等性和比较</a></h2>
+<h3 id="assert_eq-和-assert_ne-宏"><a class="header" href="#assert_eq-和-assert_ne-宏"><code>assert_eq!</code> 和 <code>assert_ne!</code> 宏</a></h3>
+<p>验证功能的常用方法是测试被测代码的结果与你期望代码返回的值之间的相等性。你可以使用 <code>assert!</code> 宏并传递一个使用 <code>==</code> 运算符的表达式来做到这一点。然而，这是一个如此常见的测试，以至于标准库提供了一对宏 —— <code>assert_eq!</code> 和 <code>assert_ne!</code> —— 以更方便地执行此测试。这些宏分别比较两个参数的相等性或不相等性。如果断言失败，它们还会打印这两个值，这使得更容易看出 <em>为什么</em> 测试失败；相反，<code>assert!</code> 宏仅指示它得到了 <code>==</code> 表达式的 <code>false</code> 值，而不打印导致 <code>false</code> 值的值。</p>
+<p>在清单 {{#ref add_two}} 中，我们编写了一个名为 <code>add_two</code> 的函数，它将 <code>2</code> 添加到其参数，然后我们使用 <code>assert_eq!</code> 和 <code>assert_ne!</code> 宏测试此函数。</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">pub fn add_two(a: u32) -&gt; u32 {
+    a + 2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(2));
+    }
+
+    #[test]
+    fn wrong_check() {
+        assert_ne!(0, add_two(2));
+    }
+}
+</code></pre>
+<p>{{#label add_two}} <span class="caption">清单 {{#ref add_two}}: 使用 <code>assert_eq!</code> 和 <code>assert_ne!</code> 宏测试函数 <code>add_two</code></span></p>
+<p>让我们检查它是否通过！</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_10_04 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_04_unittest) listing_10_04 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_04/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from listing_10_04 package
+Running 2 test(s) from src/
+[PASS] listing_10_04::tests::wrong_check (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+[PASS] listing_10_04::tests::it_adds_two (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 2 passed, 0 failed, 0 ignored, 0 filtered out
+
+
+</code></pre>
+<p>在 <code>it_adds_two</code> 测试中，我们将 <code>4</code> 作为参数传递给 <code>assert_eq!</code> 宏，它等于调用 <code>add_two(2)</code> 的结果。此测试的行是 <code>[PASS] adder::tests::it_adds_two (gas: ~1)</code>。</p>
+<p>在 <code>wrong_check</code> 测试中，我们将 <code>0</code> 作为参数传递给 <code>assert_ne!</code> 宏，它不等于调用 <code>add_two(2)</code> 的结果。如果我们给出的两个值 <em>不</em> 相等，使用 <code>assert_ne!</code> 宏的测试将通过，如果它们相等则失败。当我们不确定值 <em>将</em> 是什么，但我们知道值绝对 <em>不应该</em> 是什么时，此宏最有用。例如，如果我们正在测试一个保证以某种方式更改其输入的函数，但输入的更改方式取决于我们运行测试的星期几，那么最好的断言可能是函数的输出不等于输入。</p>
+<p>让我们在代码中引入一个错误，看看 <code>assert_eq!</code> 在失败时是什么样子的。将 <code>add_two</code> 函数的实现更改为加 <code>3</code>：</p>
+<pre><code class="language-cairo noplayground">pub fn add_two(a: u32) -&gt; u32 {
+    a + 3
+}
+</code></pre>
+<p>再次运行测试：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_10_04_wong_add (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_04_wong_add_unittest) listing_10_04_wong_add v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_04_wong_add/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 1 test(s) from listing_10_04_wong_add package
+Running 1 test(s) from src/
+[FAIL] listing_10_04_wong_add::tests::it_adds_two
+
+Failure data:
+    "assertion `4 == add_two(2)` failed.
+    4: 4
+    add_two(2): 5"
+
+Tests: 0 passed, 1 failed, 0 ignored, 0 filtered out
+
+Failures:
+    listing_10_04_wong_add::tests::it_adds_two
+
+</code></pre>
+<p>我们的测试捕获了错误！<code>it_adds_two</code> 测试失败，并显示以下消息：<code>"assertion `4 == add_two(2)` failed</code>。它告诉我们失败的断言是 <code> "assertion `left == right` failed</code>，并且 <code>left</code> 和 <code>right</code> 值打印在下一行，为 <code>left: left_value</code> 和 <code>right: right_value</code>。这有助于我们开始调试：<code>left</code> 参数是 <code>4</code>，但 <code>right</code> 参数（我们有 <code>add_two(2)</code> 的地方）是 <code>5</code>。你可以想象，当我们进行大量测试时，这将特别有帮助。</p>
+<p>注意，在某些语言和测试框架中，相等断言函数的参数称为 <code>expected</code> 和 <code>actual</code>，并且我们指定参数的顺序很重要。然而，在 Cairo 中，它们被称为 <code>left</code> 和 <code>right</code>，并且我们指定我们期望的值和代码产生的值的顺序并不重要。我们可以将此测试中的断言写为 <code>assert_eq!(add_two(2), 4)</code>，这将导致显示相同的失败消息 <code>assertion failed: `(left == right)`</code>。</p>
+<p>这是一个比较两个结构体的简单示例，展示了如何使用 <code>assert_eq!</code> 和 <code>assert_ne!</code> 宏：</p>
+<pre><code class="language-cairo noplayground">#[derive(Drop, Debug, PartialEq)]
+struct MyStruct {
+    var1: u8,
+    var2: u8,
+}
+
+#[cfg(test)]
+#[test]
+fn test_struct_equality() {
+    let first = MyStruct { var1: 1, var2: 2 };
+    let second = MyStruct { var1: 1, var2: 2 };
+    let third = MyStruct { var1: 1, var2: 3 };
+
+    assert_eq!(first, second);
+    assert_eq!(first, second, "{:?},{:?} should be equal", first, second);
+    assert_ne!(first, third);
+    assert_ne!(first, third, "{:?},{:?} should not be equal", first, third);
+}
+</code></pre>
+<p>在表面之下，<code>assert_eq!</code> 和 <code>assert_ne!</code> 宏分别使用运算符 <code>==</code> 和 <code>!=</code>。它们都接受值的快照作为参数。当断言失败时，这些宏使用调试格式化（<code>{:?}</code> 语法）打印它们的参数，这意味着被比较的值必须实现 <code>PartialEq</code> 和 <code>Debug</code> traits。所有原始类型和大多数核心库类型都实现了这些 traits。对于你自己定义的结构体和枚举，你需要实现 <code>PartialEq</code> 来断言那些类型的相等性。你还需要实现 <code>Debug</code> 以在断言失败时打印值。因为这两个 traits 都是可派生的，所以这通常就像将 <code>#[derive(Drop, Debug, PartialEq)]</code> 注释添加到你的结构体或枚举定义一样简单。有关这些和其他可派生 traits 的更多详细信息，请参阅 <a href="./appendix-03-derivable-traits.html">附录 C</a>。</p>
+<h3 id="assert_lt-assert_le-assert_gt-和-assert_ge-宏"><a class="header" href="#assert_lt-assert_le-assert_gt-和-assert_ge-宏"><code>assert_lt!</code>, <code>assert_le!</code>, <code>assert_gt!</code> 和 <code>assert_ge!</code> 宏</a></h3>
+<p>测试中的比较可以使用 <code>assert_xx!</code> 宏完成：</p>
+<ul>
+<li><code>assert_lt!</code> 检查给定值是否小于另一个值，否则回滚。</li>
+<li><code>assert_le!</code> 检查给定值是否小于或等于另一个值，否则回滚。</li>
+<li><code>assert_gt!</code> 检查给定值是否大于另一个值，否则回滚。</li>
+<li><code>assert_ge!</code> 检查给定值是否大于或等于另一个值，否则回滚。</li>
+</ul>
+<p>清单 {{#ref assert_macros}} 演示了如何使用这些宏：</p>
+<pre><code class="language-cairo noplayground">#[derive(Drop, Copy, Debug, PartialEq)]
+struct Dice {
+    number: u8,
+}
+
+impl DicePartialOrd of PartialOrd&lt;Dice&gt; {
+    fn lt(lhs: Dice, rhs: Dice) -&gt; bool {
+        lhs.number &lt; rhs.number
+    }
+
+    fn le(lhs: Dice, rhs: Dice) -&gt; bool {
+        lhs.number &lt;= rhs.number
+    }
+
+    fn gt(lhs: Dice, rhs: Dice) -&gt; bool {
+        lhs.number &gt; rhs.number
+    }
+
+    fn ge(lhs: Dice, rhs: Dice) -&gt; bool {
+        lhs.number &gt;= rhs.number
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn test_struct_equality() {
+    let first_throw = Dice { number: 5 };
+    let second_throw = Dice { number: 2 };
+    let third_throw = Dice { number: 6 };
+    let fourth_throw = Dice { number: 5 };
+
+    assert_gt!(first_throw, second_throw);
+    assert_ge!(first_throw, fourth_throw);
+    assert_lt!(second_throw, third_throw);
+    assert_le!(
+        first_throw, fourth_throw, "{:?},{:?} should be lower or equal", first_throw, fourth_throw,
+    );
+}
+</code></pre>
+<p>{{#label assert_macros}} <span class="caption">清单 {{#ref assert_macros}}:
+使用 <code>assert_xx!</code> 宏进行比较的测试示例</span></p>
+<p>在这个例子中，我们多次掷 <code>Dice</code> 结构体并比较结果。我们需要为我们的结构体手动实现 <code>PartialOrd</code> trait，以便我们可以使用 <code>lt</code>, <code>le</code>, <code>gt</code> 和 <code>ge</code> 函数比较 <code>Dice</code> 实例，这些函数分别被 <code>assert_lt!</code>, <code>assert_le!</code>, <code>assert_gt!</code> 和 <code>assert_ge!</code> 宏使用。我们还需要在我们的 <code>Dice</code> 结构体上派生 <code>Copy</code> trait，以便多次使用实例化的结构体，因为比较函数会获取变量的所有权。</p>
+<h2 id="添加自定义失败消息"><a class="header" href="#添加自定义失败消息">添加自定义失败消息</a></h2>
+<p>你还可以作为 <code>assert!</code>, <code>assert_eq!</code> 和 <code>assert_ne!</code> 宏的可选参数，添加要与失败消息一起打印的自定义消息。在所需参数之后指定的任何参数都会传递给 <code>format!</code> 宏（在 <a href="./ch12-08-printing.html#formatting">打印</a> 一章中讨论），因此你可以传递一个包含 <code>{}</code> 占位符的格式字符串以及要放入这些占位符的值。自定义消息对于记录断言的含义很有用；当测试失败时，你将更好地了解代码的问题所在。</p>
+<p>让我们添加一个自定义失败消息，该消息由一个格式字符串组成，其中包含一个占位符，该占位符填充了我们从上一个 <code>add_two</code> 函数获得的实际值：</p>
+<pre><code class="language-cairo noplayground">    #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(2), "Expected {}, got add_two(2)={}", 4, add_two(2));
+    }
+</code></pre>
+<p>现在当我们运行测试时，我们将得到更具信息量的错误消息：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test no_listing_02_custom_messages (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(no_listing_02_custom_messages_unittest) no_listing_02_custom_messages v0.1.0 (listings/ch10-testing-cairo-programs/no_listing_02_custom_messages/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 1 test(s) from no_listing_02_custom_messages package
+Running 1 test(s) from src/
+[FAIL] no_listing_02_custom_messages::tests::it_adds_two
+
+Failure data:
+    "assertion `4 == add_two(2)` failed: Expected 4, got add_two(2)=5
+    4: 4
+    add_two(2): 5"
+
+Tests: 0 passed, 1 failed, 0 ignored, 0 filtered out
+
+Failures:
+    no_listing_02_custom_messages::tests::it_adds_two
+
+</code></pre>
+<p>我们可以在测试输出中看到我们实际得到的值，这将有助于我们调试发生的事情，而不是我们期望发生的事情。</p>
+<h2 id="使用-should_panic-检查-panics"><a class="header" href="#使用-should_panic-检查-panics">使用 <code>should_panic</code> 检查 panics</a></h2>
+<p>除了检查返回值外，检查我们的代码是否按预期处理错误条件也很重要。例如，考虑清单 {{#ref guess}} 中的 <code>Guess</code> 类型：</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">#[derive(Drop)]
+struct Guess {
+    value: u64,
+}
+
+pub trait GuessTrait {
+    fn new(value: u64) -&gt; Guess;
+}
+
+impl GuessImpl of GuessTrait {
+    fn new(value: u64) -&gt; Guess {
+        if value &lt; 1 || value &gt; 100 {
+            panic!("Guess must be &gt;= 1 and &lt;= 100");
+        }
+
+        Guess { value }
+    }
+}
+</code></pre>
+<p>{{#label guess}} <span class="caption">清单 {{#ref guess}}: <code>Guess</code> 结构体及其 <code>new</code> 方法</span></p>
+<p>其他使用 <code>Guess</code> 的代码依赖于 <code>Guess</code> 实例将仅包含 <code>1</code> 和 <code>100</code> 之间的值这一保证。我们可以编写一个测试，通过调用 <code>Guess::new</code> 来确保尝试创建一个值超出该范围的 <code>Guess</code> 实例会 panic。</p>
+<p>我们通过向我们的测试函数添加属性 <code>should_panic</code> 来做到这一点。如果函数内的代码 panic，则测试通过；如果函数内的代码不 panic，则测试失败。</p>
+<pre><code class="language-cairo noplayground">#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic]
+    fn greater_than_100() {
+        GuessTrait::new(200);
+    }
+}
+</code></pre>
+<p>我们将 <code>#[should_panic]</code> 属性放在 <code>#[test]</code> 属性之后和它应用的测试函数之前。让我们看看结果，看看这个测试是否通过：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test listing_09_08 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_09_08_unittest) listing_09_08 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_05/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 1 test(s) from listing_09_08 package
+Running 1 test(s) from src/
+[PASS] listing_09_08::tests::greater_than_100 (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 1 passed, 0 failed, 0 ignored, 0 filtered out
+
+
+</code></pre>
+<p>看起来不错！现在让我们通过删除 <code>new</code> 函数在值大于 <code>100</code> 时会 panic 的条件，在我们的代码中引入一个错误：</p>
+<pre><code class="language-cairo noplayground">impl GuessImpl of GuessTrait {
+    fn new(value: u64) -&gt; Guess {
+        if value &lt; 1 {
+            panic!("Guess must be &gt;= 1 and &lt;= 100");
+        }
+
+        Guess { value }
+    }
+}
+</code></pre>
+<p>当我们运行测试时，它将失败：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test no_listing_03_wrong_new_impl (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(no_listing_03_wrong_new_impl_unittest) no_listing_03_wrong_new_impl v0.1.0 (listings/ch10-testing-cairo-programs/no_listing_03_wrong_new_impl/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 1 test(s) from no_listing_03_wrong_new_impl package
+Running 1 test(s) from src/
+[FAIL] no_listing_03_wrong_new_impl::tests::greater_than_100
+
+Failure data:
+    Expected to panic, but no panic occurred
+
+Tests: 0 passed, 1 failed, 0 ignored, 0 filtered out
+
+Failures:
+    no_listing_03_wrong_new_impl::tests::greater_than_100
+
+</code></pre>
+<p>在这种情况下，我们没有得到非常有用的消息，但是当我们查看测试函数时，我们看到它用 <code>#[should_panic]</code> 属性进行了注释。我们得到的失败意味着测试函数中的代码没有导致 panic。</p>
+<p>使用 <code>should_panic</code> 的测试可能不精确。如果测试由于与我们预期的原因不同的原因而 panic，<code>should_panic</code> 测试也会通过。为了使 <code>should_panic</code> 测试更精确，我们可以向 <code>#[should_panic]</code> 属性添加一个可选的 <code>expected</code> 参数。测试工具将确保失败消息包含提供的文本。例如，考虑清单 {{#ref guess-2}} 中 <code>GuessImpl</code> 的修改后的代码，其中 <code>new</code> 函数根据值是太小还是太大而使用不同的消息 panic：</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">impl GuessImpl of GuessTrait {
+    fn new(value: u64) -&gt; Guess {
+        if value &lt; 1 {
+            panic!("Guess must be &gt;= 1");
+        } else if value &gt; 100 {
+            panic!("Guess must be &lt;= 100");
+        }
+
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected: "Guess must be &lt;= 100")]
+    fn greater_than_100() {
+        GuessTrait::new(200);
+    }
+}
+</code></pre>
+<p>{{#label guess-2}} <span class="caption">清单 {{#ref guess-2}}: <code>new</code>
+使用不同错误消息 panic 的实现</span></p>
+<p>测试将通过，因为我们在 <code>should_panic</code> 属性的 <code>expected</code> 参数中放置的值是 <code>Guess::new</code> 方法 panic 所用的字符串。我们需要指定我们期望的整个 panic 消息。</p>
+<p>为了看看当带有预期消息的 <code>should_panic</code> 测试失败时会发生什么，让我们再次通过交换 <code>if value &lt; 1</code> 和 <code>else if value &gt; 100</code> 块的主体来在我们的代码中引入错误：</p>
+<pre><code class="language-cairo noplayground">impl GuessImpl of GuessTrait {
+    fn new(value: u64) -&gt; Guess {
+        if value &lt; 1 {
+            panic!("Guess must be &lt;= 100");
+        } else if value &gt; 100 {
+            panic!("Guess must be &gt;= 1");
+        }
+
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected: "Guess must be &lt;= 100")]
+    fn greater_than_100() {
+        GuessTrait::new(200);
+    }
+}
+</code></pre>
+<p>这次当我们运行 <code>should_panic</code> 测试时，它将失败：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test no_listing_04_new_bug (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(no_listing_04_new_bug_unittest) no_listing_04_new_bug v0.1.0 (listings/ch10-testing-cairo-programs/no_listing_04_new_bug/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 1 test(s) from no_listing_04_new_bug package
+Running 1 test(s) from src/
+[FAIL] no_listing_04_new_bug::tests::greater_than_100
+
+Failure data:
+    Incorrect panic data
+    Actual:    [0x46a6158a16a947e5916b2a2ca68501a45e93d7110e81aa2d6438b1c57c879a3, 0x0, 0x4775657373206d757374206265203e3d2031, 0x12] (Guess must be &gt;= 1)
+    Expected:  [0x46a6158a16a947e5916b2a2ca68501a45e93d7110e81aa2d6438b1c57c879a3, 0x0, 0x4775657373206d757374206265203c3d20313030, 0x14] (Guess must be &lt;= 100)
+
+Tests: 0 passed, 1 failed, 0 ignored, 0 filtered out
+
+Failures:
+    no_listing_04_new_bug::tests::greater_than_100
+
+</code></pre>
+<p>失败消息表明此测试确实如我们预期的那样 panic 了，但 panic 消息不包含预期的字符串。我们在这种情况下得到的 panic 消息是 <code>Guess must be &gt;= 1</code>。现在我们可以开始找出我们的错误在哪里了！</p>
+<h2 id="运行单个测试"><a class="header" href="#运行单个测试">运行单个测试</a></h2>
+<p>有时，运行完整的测试套件可能需要很长时间。如果你正在处理特定区域的代码，你可能只想运行属于该代码的测试。你可以通过将你想运行的测试的名称作为参数传递给 <code>scarb test</code> 来选择要运行的测试。</p>
+<p>为了演示如何运行单个测试，我们将首先创建两个测试函数，如清单 {{#ref two-tests}} 所示，并选择要运行的测试。</p>
+<p><span class="filename">文件名: src/lib.cairo</span></p>
+<pre><code class="language-cairo noplayground">#[cfg(test)]
+mod tests {
+    #[test]
+    fn add_two_and_two() {
+        let result = 2 + 2;
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn add_three_and_two() {
+        let result = 3 + 2;
+        assert!(result == 5, "result is not 5");
+    }
+}
+</code></pre>
+<p>{{#label two-tests}} <span class="caption">清单 {{#ref two-tests}}: 两个具有不同名称的测试</span></p>
+<p>我们可以将任何测试函数的名称传递给 <code>scarb test</code> 以仅运行该测试：</p>
+<pre><code class="language-shell">$ scarb test add_two_and_two
+     Running test listing_10_07 (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(listing_10_07_unittest) listing_10_07 v0.1.0 (listings/ch10-testing-cairo-programs/listing_10_07/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 1 test(s) from listing_10_07 package
+Running 1 test(s) from src/
+[PASS] listing_10_07::tests::add_two_and_two (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 1 passed, 0 failed, 0 ignored, 1 filtered out
+
+
+</code></pre>
+<p>只有名为 <code>add_two_and_two</code> 的测试运行了；另一个测试不匹配该名称。测试输出让我们知道我们还有一个未运行的测试，在末尾显示 <code>1 filtered out;</code>。</p>
+<p>我们还可以指定测试名称的一部分，任何名称包含该值的测试都将运行。</p>
+<h2 id="除非特别请求否则忽略某些测试"><a class="header" href="#除非特别请求否则忽略某些测试">除非特别请求，否则忽略某些测试</a></h2>
+<p>有时一些特定的测试执行起来非常耗时，因此你可能希望在大多数 <code>scarb test</code> 运行期间排除它们。除了将所有你想要运行的测试列为参数外，你还可以使用 <code>#[ignore]</code> 属性注释耗时的测试以排除它们，如下所示：</p>
+<pre><code class="language-cairo noplayground">pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    #[ignore]
+    fn expensive_test() { // code that takes an hour to run
+    }
+}
+</code></pre>
+<p>在 <code>#[test]</code> 之后，我们将 <code>#[ignore]</code> 行添加到我们想要排除的测试中。现在当我们运行测试时，<code>it_works</code> 运行，但 <code>expensive_test</code> 不运行：</p>
+<pre><code class="language-shell">$ scarb test 
+     Running test no_listing_05_ignore_tests (snforge test)
+    Blocking waiting for file lock on registry db cache
+    Blocking waiting for file lock on registry db cache
+   Compiling test(no_listing_05_ignore_tests_unittest) no_listing_05_ignore_tests v0.1.0 (listings/ch10-testing-cairo-programs/no_listing_05_ignore_tests/Scarb.toml)
+    Finished `dev` profile target(s) in 1 second
+
+
+Collected 2 test(s) from no_listing_05_ignore_tests package
+Running 2 test(s) from src/
+[IGNORE] no_listing_05_ignore_tests::tests::expensive_test
+[PASS] no_listing_05_ignore_tests::tests::it_works (l1_gas: ~0, l1_data_gas: ~0, l2_gas: ~40000)
+Tests: 1 passed, 0 failed, 1 ignored, 0 filtered out
+
+
+</code></pre>
+<p><code>expensive_test</code> 函数被列为已忽略。</p>
+<p>当你只想检查被忽略测试的结果并且有时间等待结果时，你可以运行 <code>scarb test --include-ignored</code> 来运行所有测试，无论它们是否被忽略。</p>
+<h2 id="测试递归函数或循环"><a class="header" href="#测试递归函数或循环">测试递归函数或循环</a></h2>
+<p>在测试递归函数或循环时，测试默认使用它可以消耗的最大 Gas 量实例化。这可以防止运行无限循环或消耗过多的 Gas，并可以帮助你对实现的效率进行基准测试。假设这个值足够大，但你可以通过向测试函数添加 <code>#[available_gas(&lt;Number&gt;)]</code> 属性来覆盖它。以下示例显示了如何使用它：</p>
+<pre><code class="language-cairo noplayground">fn sum_n(n: usize) -&gt; usize {
+    let mut i = 0;
+    let mut sum = 0;
+    while i &lt;= n {
+        sum += i;
+        i += 1;
+    }
+    sum
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[available_gas(l2_gas: 2000000)]
+    fn test_sum_n() {
+        let result = sum_n(10);
+        assert!(result == 55, "result is not 55");
+    }
+}
+</code></pre>
+<h2 id="对-cairo-程序进行基准测试"><a class="header" href="#对-cairo-程序进行基准测试">对 Cairo 程序进行基准测试</a></h2>
+<p>Starknet Foundry 包含一个性能分析功能，可用于分析和优化 Cairo 程序的性能。</p>
+<p><a href="https://foundry-rs.github.io/starknet-foundry/snforge-advanced-features/profiling.html">profiling</a> 功能为成功的测试生成执行跟踪，用于创建配置文件输出。这允许你对代码的特定部分进行基准测试。</p>
+<p>要使用分析器，你需要：</p>
+<ol>
+<li>从 Software Mansion 安装 <a href="https://github.com/software-mansion/cairo-profiler">Cairo Profiler</a>。</li>
+<li>安装 <a href="https://go.dev/doc/install">Go</a>, <a href="https://www.graphviz.org/download/">Graphviz</a> 和 <a href="https://github.com/google/pprof?tab=readme-ov-file#building-pprof">pprof</a>，它们都需要用来可视化生成的配置文件输出。</li>
+<li>运行 <code>snforge test --build-profile</code> 命令，该命令为每个通过的测试生成一个跟踪文件，存储在你项目的 <em>snfoundry_trace</em> 目录中。此命令还在 <em>profile</em> 目录中生成相应的输出文件。</li>
+<li>运行 <code>go tool pprof -http=":8000" path/to/profile/output.pb.gz</code> 来分析配置文件。这将在指定端口启动 Web 服务器。</li>
+</ol>
+<p>让我们重用上面研究的 <code>sum_n</code> 函数：</p>
+<pre><code class="language-cairo noplayground">fn sum_n(n: usize) -&gt; usize {
+    let mut i = 0;
+    let mut sum = 0;
+    while i &lt;= n {
+        sum += i;
+        i += 1;
+    }
+    sum
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[available_gas(l2_gas: 2000000)]
+    fn test_sum_n() {
+        let result = sum_n(10);
+        assert!(result == 55, "result is not 55");
+    }
+}
+</code></pre>
+<p>在生成跟踪文件和配置文件输出后，在你的项目中运行 <code>go tool pprof</code> 将启动 Web 服务器，你可以在其中找到有关你运行的测试的许多有用信息：</p>
+<ul>
+<li>
+<p>测试包括一个函数调用，对应于对测试函数的调用。在测试函数中多次调用 <code>sum_n</code> 仍将返回 1 次调用。这是因为 <code>snforge</code> 在执行测试时模拟合约调用。</p>
+</li>
+<li>
+<p><code>sum_n</code> 函数执行使用 256 个 Cairo 步骤：</p>
+</li>
+</ul>
+<div align="center">
+    <img src="pprof-steps.png" alt="pprof number of steps" width="800px" />
+</div>
+
+<p>其他信息也可用，例如内存空洞（即未使用的内存单元）或内置函数的使用。Cairo Profiler 正在积极开发中，未来将提供许多其他功能。</p>
+<p>{{#quiz ../quizzes/ch10-01-how_to_write_tests.toml}}</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch10-00-testing-cairo-programs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch10-02-test-organization.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch10-00-testing-cairo-programs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch10-02-test-organization.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

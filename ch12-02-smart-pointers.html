@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>智能指针 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch12-02-smart-pointers.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="智能指针"><a class="header" href="#智能指针">智能指针</a></h1>
+<p>指针是一个通用概念，指包含内存地址的变量。此地址引用或“指向”其他一些数据。虽然指针是一个强大的功能，但它们也可能是错误和安全漏洞的来源。例如，指针可以引用未分配的内存单元，这意味着尝试访问该地址处的数据会导致程序崩溃，使其变得不可证明。为了防止此类问题，Cairo 使用 <em>智能指针 (Smart Pointers)</em>。</p>
+<p>智能指针是像指针一样行动的数据结构，但也具有额外的元数据和功能。智能指针的概念并非 Cairo 独有：智能指针起源于 C++，并且也存在于像 Rust 这样的其他语言中。在 Cairo 的特定情况下，智能指针通过严格的类型检查和所有权规则提供一种访问内存的安全方式，确保不会以可能导致程序不可证明的不安全方式寻址内存。</p>
+<p>虽然我们当时没有这样称呼它们，但我们在本书中已经遇到过一些智能指针，包括 <a href="./ch03-00-common-collections.html">第 {{#chap common-collections}} 章</a> 中的 <code>Felt252Dict&lt;T&gt;</code> 和 <code>Array&lt;T&gt;</code>。这两种类型都算作智能指针，因为它们拥有一个内存段并允许你操作它。它们还具有元数据和额外的功能或保证。数组跟踪其当前长度，以确保现有元素不被覆盖，并且新元素仅追加到末尾。</p>
+<p>Cairo VM 内存由多个可以存储数据的段组成，每个段由唯一索引标识。当你创建一个数组时，你在内存中分配一个新的段来存储未来的元素。数组本身只是一个指向存储元素的那个段的指针。</p>
+<h2 id="用于操作指针的-boxt-类型"><a class="header" href="#用于操作指针的-boxt-类型">用于操作指针的 <code>Box&lt;T&gt;</code> 类型</a></h2>
+<p>Cairo 中的主要智能指针类型是一个 <em>box</em>，表示为 <code>Box&lt;T&gt;</code>。手动定义 boxes 允许你将数据存储在 Cairo VM 的特定内存段中，称为 <em>boxed segment</em>。此段专门用于存储所有 boxed 值，留在执行段中的只是一个指向 boxed 段的指针。每当你实例化一个新的 <code>Box&lt;T&gt;</code> 类型的指针变量时，你就将 <code>T</code> 类型的数据追加到 boxed 段。</p>
+<p>除了将它们的内部值写入 boxed 段外，Boxes 几乎没有性能开销。但它们也没有很多额外的功能。你将在这些情况下最常使用它们：</p>
+<ul>
+<li>当你有一个在编译时无法知道大小的类型，并且你想要在需要确切大小的上下文中使用该类型的值时</li>
+<li>当你有大量数据并且你想要转移所有权但确保在这样做时数据不会被复制时</li>
+</ul>
+<p>我们将在 <a href="./ch12-02-smart-pointers.html#enabling-recursive-types-with-nullable-boxes">“使用 Boxes 启用递归类型”</a> 部分演示第一种情况。在第二种情况下，转移大量数据的所有权可能需要很长时间，因为数据会在内存中被复制。为了改善这种情况下的性能，我们可以使用 box 类型将大量数据存储在 boxed 段中。然后，只有少量的指针数据在内存中被复制，而它引用的数据则留在 boxed 段的一个地方。</p>
+<h3 id="使用-boxt-在-boxed-segment-中存储数据"><a class="header" href="#使用-boxt-在-boxed-segment-中存储数据">使用 <code>Box&lt;T&gt;</code> 在 Boxed Segment 中存储数据</a></h3>
+<p>在讨论 <code>Box&lt;T&gt;</code> 的 boxed segment 存储用例之前，我们将介绍语法以及如何与存储在 <code>Box&lt;T&gt;</code> 中的值进行交互。</p>
+<p>清单 {{#ref basic_box}} 展示了如何使用 box 在 boxed segment 中存储一个值：</p>
+<pre><code class="language-cairo">#[executable]
+fn main() {
+    let b = BoxTrait::new(5_u128);
+    println!("b = {}", b.unbox())
+}
+</code></pre>
+<p>{{#label basic_box}} <span class="caption">清单 {{#ref basic_box}}: 使用 box 在 boxed segment 中存储 <code>u128</code> 值</span></p>
+<p>我们定义变量 <code>b</code> 具有指向值 <code>5</code> 的 <code>Box</code> 的值，该值存储在 boxed segment 中。该程序将打印 <code>b = 5</code>；在这种情况下，我们可以像访问执行内存中的数据一样访问 box 中的数据。将单个值放在 box 中并不是很有用，所以你不会经常以这种方式单独使用 boxes。像单个 <code>u128</code> 这样的值默认存储在执行内存中，在大多数情况下更合适。让我们看一个例子，其中 boxes 允许我们定义如果没有 boxes 我们将被禁止定义的类型。</p>
+<h3 id="使用-boxes-启用递归类型"><a class="header" href="#使用-boxes-启用递归类型">使用 Boxes 启用递归类型</a></h3>
+<p>递归类型的值可以拥有相同类型的另一个值作为其自身的一部分。递归类型会带来问题，因为在编译时 Cairo 需要知道一个类型占用多少空间。然而，递归类型的值的嵌套理论上可以无限继续，所以 Cairo 无法知道该值需要多少空间。因为 boxes 有一个已知的大小，我们可以通过在递归类型定义中插入一个 box 来启用递归类型。</p>
+<p>作为递归类型的一个例子，让我们探索二叉树的实现。我们将定义的二叉树类型除了递归之外都很简单；因此，我们将使用的示例中的概念在你遇到涉及递归类型的更复杂情况时都会很有用。</p>
+<p>二叉树是一种树数据结构，其中每个节点最多有两个子节点，分别称为左子节点和右子节点。分支的最后一个元素是叶子，它是一个没有子节点的节点。</p>
+<p>清单 {{#ref recursive_types_wrong}} 显示了实现 <code>u32</code> 值二叉树的尝试。注意这段代码还不能编译，因为 <code>BinaryTree</code> 类型没有已知的大小，我们将演示这一点。</p>
+<pre><code class="language-cairo noplayground">//TAG: does_not_compile
+
+#[derive(Copy, Drop)]
+enum BinaryTree {
+    Leaf: u32,
+    Node: (u32, BinaryTree, BinaryTree),
+}
+
+#[executable]
+fn main() {
+    let leaf1 = BinaryTree::Leaf(1);
+    let leaf2 = BinaryTree::Leaf(2);
+    let leaf3 = BinaryTree::Leaf(3);
+    let node = BinaryTree::Node((4, leaf2, leaf3));
+    let _root = BinaryTree::Node((5, leaf1, node));
+}
+</code></pre>
+<p>{{#label recursive_types_wrong}} <span class="caption">清单 {{#ref recursive_types_wrong}}: 实现 <code>u32</code> 值二叉树的第一次尝试</span></p>
+<blockquote>
+<p>注意：为了本示例的目的，我们实现了一个仅保存 u32 值的二叉树。我们可以使用泛型来实现它，正如我们在第 {{#chap generic-types-and-traits}} 章中讨论的那样，来定义一个可以存储任何类型值的二叉树。</p>
+</blockquote>
+<p>根节点包含 5 和两个子节点。左子节点是一个包含 1 的叶子。右子节点是另一个包含 4 的节点，它反过来又有两个叶子子节点：一个包含 2，另一个包含 3。此结构形成了一个深度为 2 的简单二叉树。</p>
+<p>如果我们尝试编译清单 {{#ref recursive_types_wrong}} 中的代码，我们会得到以下错误：</p>
+<pre><code class="language-plaintext">$ scarb build 
+   Compiling listing_recursive_types_wrong v0.1.0 (listings/ch12-advanced-features/listing_recursive_types_wrong/Scarb.toml)
+error: Recursive type "(core::integer::u32, listing_recursive_types_wrong::BinaryTree, listing_recursive_types_wrong::BinaryTree)" has infinite size.
+ --&gt; listings/ch12-advanced-features/listing_recursive_types_wrong/src/lib.cairo:6:5
+    Node: (u32, BinaryTree, BinaryTree),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: Recursive type "listing_recursive_types_wrong::BinaryTree" has infinite size.
+ --&gt; listings/ch12-advanced-features/listing_recursive_types_wrong/src/lib.cairo:11:17
+    let leaf1 = BinaryTree::Leaf(1);
+                ^^^^^^^^^^^^^^^^^^^
+
+error: Recursive type "(core::integer::u32, listing_recursive_types_wrong::BinaryTree, listing_recursive_types_wrong::BinaryTree)" has infinite size.
+ --&gt; listings/ch12-advanced-features/listing_recursive_types_wrong/src/lib.cairo:14:33
+    let node = BinaryTree::Node((4, leaf2, leaf3));
+                                ^^^^^^^^^^^^^^^^^
+
+error: could not compile `listing_recursive_types_wrong` due to previous error
+
+</code></pre>
+<p>错误显示此类型“具有无限大小”。原因是我们将 <code>BinaryTree</code> 定义为具有一个递归的变体：它直接持有自身的另一个值。结果，Cairo 无法弄清楚存储 <code>BinaryTree</code> 值需要多少空间。</p>
+<p>希望我们可以通过使用 <code>Box&lt;T&gt;</code> 来存储 <code>BinaryTree</code> 的递归变体来修复此错误。因为 <code>Box&lt;T&gt;</code> 是一个指针，Cairo 总是知道 <code>Box&lt;T&gt;</code> 需要多少空间：指针的大小不会根据它指向的数据量而改变。这意味着我们可以将 <code>Box&lt;T&gt;</code> 放在 <code>Node</code> 变体中，而不是直接放另一个 <code>BinaryTree</code> 值。<code>Box&lt;T&gt;</code> 将指向将存储在它们自己段中的子 <code>BinaryTree</code> 值，而不是在 <code>Node</code> 变体内。从概念上讲，我们仍然有一个二叉树，由持有其他二叉树的二叉树创建，但此实现现在更像是将项目彼此并排放置，而不是彼此嵌套。</p>
+<p>我们可以将清单 {{#ref recursive_types_wrong}} 中 <code>BinaryTree</code> 枚举的定义和清单 {{#ref recursive_types_wrong}} 中 <code>BinaryTree</code> 的使用更改为清单 {{#ref recursive_types}} 中的代码，这将可以编译：</p>
+<pre><code class="language-cairo">mod display;
+use display::DebugBinaryTree;
+
+#[derive(Copy, Drop)]
+enum BinaryTree {
+    Leaf: u32,
+    Node: (u32, Box&lt;BinaryTree&gt;, Box&lt;BinaryTree&gt;),
+}
+
+
+#[executable]
+fn main() {
+    let leaf1 = BinaryTree::Leaf(1);
+    let leaf2 = BinaryTree::Leaf(2);
+    let leaf3 = BinaryTree::Leaf(3);
+    let node = BinaryTree::Node((4, BoxTrait::new(leaf2), BoxTrait::new(leaf3)));
+    let root = BinaryTree::Node((5, BoxTrait::new(leaf1), BoxTrait::new(node)));
+
+    println!("{:?}", root);
+}
+</code></pre>
+<p>{{#label recursive_types}} <span class="caption">清单 {{#ref recursive_types}}: 使用 Boxes 定义递归二叉树</span></p>
+<p><code>Node</code> 变体现在持有 <code>(u32, Box&lt;BinaryTree&gt;, Box&lt;BinaryTree&gt;)</code>，表示 <code>Node</code> 变体将存储一个 <code>u32</code> 值和两个 <code>Box&lt;BinaryTree&gt;</code> 值。现在，我们知道 <code>Node</code> 变体将需要 <code>u32</code> 的大小加上两个 <code>Box&lt;BinaryTree&gt;</code> 值的大小。通过使用 box，我们打破了无限的递归链，因此编译器可以计算出存储 <code>BinaryTree</code> 值所需的大小。</p>
+<h3 id="使用-boxes-提高性能"><a class="header" href="#使用-boxes-提高性能">使用 Boxes 提高性能</a></h3>
+<p>在函数之间传递指针允许你引用数据而无需复制数据本身。使用 boxes 可以提高性能，因为它允许你将指向某些数据的指针从一个函数传递到另一个函数，而无需在执行函数调用之前复制内存中的整个数据。不必在调用函数之前将 <code>n</code> 个值写入内存，只需写入对应于数据指针的单个值。如果存储在 box 中的数据非常大，性能提升可能会很显著，因为你会在每次函数调用前节省 <code>n-1</code> 次内存操作。</p>
+<blockquote>
+<p>注意：这仅适用于存储在 box 中的数据未被变异（mutated）的情况。如果数据被变异，将创建一个新的 <code>Box&lt;T&gt;</code>，这将需要将数据复制到新 box 中。</p>
+</blockquote>
+<p>让我们看看清单 {{#ref box}} 中的代码，它展示了向函数传递数据的两种方式：按值和按指针。</p>
+<pre><code class="language-cairo">#[derive(Drop)]
+struct Cart {
+    paid: bool,
+    items: u256,
+    buyer: ByteArray,
+}
+
+fn pass_data(cart: Cart) {
+    println!("{} is shopping today and bought {} items", cart.buyer, cart.items);
+}
+
+fn pass_pointer(cart: Box&lt;Cart&gt;) {
+    let cart = cart.unbox();
+    println!("{} is shopping today and bought {} items", cart.buyer, cart.items);
+}
+
+#[executable]
+fn main() {
+    let new_struct = Cart { paid: true, items: 1, buyer: "Eli" };
+    pass_data(new_struct);
+
+    let new_box = BoxTrait::new(Cart { paid: false, items: 2, buyer: "Uri" });
+    pass_pointer(new_box);
+}
+</code></pre>
+<p>{{#label box}} <span class="caption">清单 {{#ref box}}: 将大量数据存储在 box 中以提高性能。</span></p>
+<p><code>main</code> 函数包含 2 个函数调用：</p>
+<ul>
+<li><code>pass_data</code> 接受一个 <code>Cart</code> 类型的变量。</li>
+<li><code>pass_pointer</code> 接受一个 <code>Box&lt;Cart&gt;</code> 类型的指针。</li>
+</ul>
+<p>当向函数传递数据时，整个数据会在紧接函数调用之前被复制到最后可用的内存单元中。调用 <code>pass_data</code> 将把 <code>Cart</code> 的所有 3 个字段复制到内存中，而 <code>pass_pointer</code> 仅需要复制大小为 1 的 <code>new_box</code> 指针。</p>
+<div align="center">
+    <img src="box_memory.png" alt="box memory" width="500px" />
+<div align="center">
+    </div>
+
+    <span class="caption">使用 boxes 时的 CairoVM 内存布局</span>
+</div>
+
+<p>上面的插图演示了内存在两种情况下的行为。<code>Cart</code> 的第一个实例存储在执行段中，我们需要在调用 <code>pass_data</code> 函数之前将其所有字段复制到内存中。<code>Cart</code> 的第二个实例存储在 boxed segment 中，指向它的指针存储在执行段中。当调用 <code>pass_pointer</code> 函数时，只有指向结构体的指针在紧接函数调用之前被复制到内存中。然而，在这两种情况下，实例化结构体都会将其所有值存储在执行段中：boxed segment 只能用取自执行段的数据填充。</p>
+<h2 id="字典的-nullablet-类型"><a class="header" href="#字典的-nullablet-类型">字典的 <code>Nullable&lt;T&gt;</code> 类型</a></h2>
+<p><code>Nullable&lt;T&gt;</code> 是另一种类型的智能指针，它可以指向一个值，或者在没有值的情况下为 <code>null</code>。它是在 Sierra 级别定义的。此类型主要用于字典，这些字典包含不实现 <code>Felt252DictValue&lt;T&gt;</code> trait 的 <code>zero_default</code> 方法的类型（即数组和结构体）。</p>
+<p>如果我们尝试访问字典中不存在的元素，如果无法调用 <code>zero_default</code> 方法，代码将失败。</p>
+<p>关于字典的 <a href="./ch03-02-dictionaries.html#dictionaries-of-types-not-supported-natively">第 {{#chap common-collections}} 章</a> 彻底解释了如何使用 <code>Nullable&lt;T&gt;</code> 类型在字典内存储 <code>Span&lt;felt252&gt;</code> 变量。更多信息请参考该章节。</p>
+<p>{{#quiz ../quizzes/ch12-02-smart_pointers.toml}}</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch12-01-custom-data-structures.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12-09-deref-coercion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch12-01-custom-data-structures.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12-09-deref-coercion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

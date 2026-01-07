@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>闭包：捕获其环境的匿名函数 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch11-01-closures.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="闭包"><a class="header" href="#闭包">闭包</a></h1>
+<p>闭包是可以保存在变量中或作为参数传递给其他函数的匿名函数。你可以在一个地方创建闭包，然后在并在其他地方调用闭包以在不同的上下文中对其进行评估。与函数不同，闭包可以从定义它们的作用域中捕获值。我们将演示这些闭包功能如何允许代码重用和行为自定义。</p>
+<blockquote>
+<p>注意：闭包是在 Cairo 2.9 中引入的，目前仍在开发中。
+一些新功能将在未来的 Cairo 版本中引入，因此本页面将随之发展。</p>
+</blockquote>
+<h2 id="理解闭包"><a class="header" href="#理解闭包">理解闭包</a></h2>
+<p>在编写 Cairo 程序时，你经常需要将行为作为参数传递给另一个函数。闭包提供了一种内联定义此行为的方法，而无需创建单独的命名函数。在处理集合、错误处理以及任何你想要使用函数作为参数自定义函数行为的场景时，它们特别有价值。</p>
+<p>考虑一个简单的例子，我们要根据某些条件以不同方式处理数字。我们无需编写多个函数，而是可以使用闭包在需要的地方定义行为：</p>
+<pre><code class="language-cairo">    let double = |value| value * 2;
+    println!("Double of 2 is {}", double(2_u8));
+    println!("Double of 4 is {}", double(4_u8));
+
+    // This won't work because `value` type has been inferred as `u8`.
+    //println!("Double of 6 is {}", double(6_u16));
+
+    let sum = |x: u32, y: u32, z: u16| {
+        x + y + z.into()
+    };
+    println!("Result: {}", sum(1, 2, 3));
+</code></pre>
+<p>闭包的参数在管道符号（<code>|</code>）之间。注意我们不需要指定参数和返回值的类型（参见 <code>double</code> 闭包），它们将从闭包的使用中推断出来，就像对任何变量所做的那样。
+当然，如果你使用具有不同类型的闭包，你将得到一个 <code>Type annotations needed</code> 错误，告诉你必须选择并指定闭包参数类型。</p>
+<p>主体是一个表达式，可以像 <code>double</code> 一样在一行上没有 <code>{}</code>，或者像 <code>sum</code> 一样在几行上有 <code>{}</code>。</p>
+<h2 id="使用闭包捕获环境"><a class="header" href="#使用闭包捕获环境">使用闭包捕获环境</a></h2>
+<p>闭包的有趣之处之一是它们可以包含来自其封闭作用域的绑定。</p>
+<p>在以下示例中，<code>my_closure</code> 使用对 <code>x</code> 的绑定来计算 <code>x + value * 3</code>。</p>
+<pre><code class="language-cairo">    let x = 8;
+    let my_closure = |value| {
+        x * (value + 3)
+    };
+
+    println!("my_closure(1) = {}", my_closure(1));
+</code></pre>
+<blockquote>
+<p>注意，目前闭包仍然不允许捕获可变变量，但这将在未来的 Cairo 版本中得到支持。</p>
+</blockquote>
+<h2 id="闭包类型推断和注释"><a class="header" href="#闭包类型推断和注释">闭包类型推断和注释</a></h2>
+<p>函数和闭包之间还有更多区别。闭包通常不需要像 <code>fn</code> 函数那样注释参数或返回值的类型。函数需要类型注释，因为类型是暴露给用户的显式接口的一部分。严格定义此接口对于确保每个人都就函数使用和返回的值类型达成一致至关重要。另一方面，闭包不用于这样的暴露接口：它们存储在变量中，并在不命名它们且不将它们暴露给我们的库用户的情况下使用。</p>
+<p>闭包通常很短，并且仅在狭窄的上下文中相关，而不是在任何任意场景中。在这些有限的上下文中，编译器可以推断参数的类型和返回类型，类似于它能够推断大多数量的类型的方式（在极少数情况下，编译器也需要闭包类型注释）。</p>
+<p>与变量一样，如果我们想要增加明确性和清晰度，我们可以添加类型注释，代价是比严格必要的更冗长。闭包的类型注释看起来像清单 {{#ref closure-type}} 中显示的定义。在这个例子中，我们定义了一个闭包并将其存储在变量中，而不是像我们在清单 13-1 中所做的那样在作为参数传递它的地方定义闭包。</p>
+<pre><code class="language-cairo">    let expensive_closure = |num: u32| -&gt; u32 {
+        num
+    };
+</code></pre>
+<p>{{#label closure-type}} 清单 {{#ref closure-type}}: 在闭包中添加参数和返回值类型的可选类型注释</p>
+<p>添加了类型注释后，闭包的语法看起来更类似于函数的语法。这里我们为了比较，定义了一个将其参数加 1 的函数和一个具有相同行为的闭包。我们要添加了一些空格来对齐相关部分。这说明了闭包语法除了使用管道和可选语法的数量外，与函数语法是多么相似：</p>
+<pre><code class="language-cairo ignore">fn  add_one_v1   (x: u32) -&gt; u32 { x + 1 }
+let add_one_v2 = |x: u32| -&gt; u32 { x + 1 };
+let add_one_v3 = |x|             { x + 1 };
+let add_one_v4 = |x|               x + 1  ;
+</code></pre>
+<p>第一行显示了一个函数定义，第二行显示了一个完全注释的闭包定义。在第三行中，我们从闭包定义中删除了类型注释。在第四行中，我们删除了方括号，这是可选的，因为闭包主体只有一个表达式。这些都是有效的定义，在调用时会产生相同的行为。<code>add_one_v3</code> 和 <code>add_one_v4</code> 行需要评估闭包才能编译，因为类型将从其使用中推断出来。这类似于 <code>let array = array![];</code> 需要类型注释或某种类型的值插入到 <code>array</code> 中，以便 Cairo 能够推断类型。</p>
+<p>对于闭包定义，编译器将为它的每个参数及其返回值推断一个具体类型。例如，清单 {{#ref closure-different-types}} 显示了一个简短闭包的定义，它只是返回它作为参数接收的值。除了用于此示例的目的外，此闭包不是很有用。注意我们在定义中没有添加任何类型注释。因为没有类型注释，我们可以用任何类型调用闭包，我们在这里第一次用 <code>u64</code> 做了这件事。如果我们随后尝试用 <code>32</code> 调用 <code>example_closure</code>，我们将得到一个错误。</p>
+<pre><code class="language-cairo noplayground">    let example_closure = |x| x;
+
+    let s = example_closure(5_u64);
+    let n = example_closure(5_u32);
+</code></pre>
+<p>{{#label closure-different-types}} 清单 {{#ref closure-different-types}}:
+尝试调用一个类型被推断为两种不同类型的闭包</p>
+<p>编译器给出了这个错误：</p>
+<pre><code>$ scarb build 
+   Compiling listing_closure_different_types v0.1.0 (listings/ch11-functional-features/listing_closure_different_types/Scarb.toml)
+warn[E0001]: Unused variable. Consider ignoring by prefixing with `_`.
+ --&gt; listings/ch11-functional-features/listing_closure_different_types/src/lib.cairo:7:9
+    let s = example_closure(5_u64);
+        ^
+
+warn[E0001]: Unused variable. Consider ignoring by prefixing with `_`.
+ --&gt; listings/ch11-functional-features/listing_closure_different_types/src/lib.cairo:8:9
+    let n = example_closure(5_u32);
+        ^
+
+error: Trait has no implementation in context: core::ops::function::Fn::&lt;{closure@listings/ch11-functional-features/listing_closure_different_types/src/lib.cairo:5:27: 5:30}, (core::integer::u32,)&gt;.
+ --&gt; listings/ch11-functional-features/listing_closure_different_types/src/lib.cairo:8:13
+    let n = example_closure(5_u32);
+            ^^^^^^^^^^^^^^^^^^^^^^
+
+error: could not compile `listing_closure_different_types` due to previous error
+
+</code></pre>
+<p>我们第一次使用 <code>u64</code> 值调用 <code>example_closure</code> 时，编译器推断 <code>x</code> 的类型和闭包的返回类型为 <code>u64</code>。然后这些类型被锁定在 <code>example_closure</code> 的闭包中，当我们下次尝试使用具有相同闭包的不同类型时，我们会得到类型错误。</p>
+<h2 id="将捕获的值移出闭包和-fn-traits"><a class="header" href="#将捕获的值移出闭包和-fn-traits">将捕获的值移出闭包和 <code>Fn</code> Traits</a></h2>
+<p>一旦闭包从定义闭包的环境中捕获了引或捕获了值的所有权（从而影响了什么被 <em>移动到</em> 闭包中，如果有的话），闭包主体中的代码定义了稍后评估闭包时对引用或值发生的情况（从而影响了什么被 <em>移出</em> 闭包，如果有的话）。闭包主体可以做以下任何事情：将捕获的值移出闭包，既不移动也不改变值，或者从一开始就不从环境中捕获任何东西。</p>
+<p>闭包捕获和处理环境中值的方式会影响闭包实现哪些 traits，而 traits 是函数和结构体指定它们可以使用哪种闭包的方式。闭包将根据闭包的主体如何处理值，以累加的方式自动实现这些 <code>Fn</code> traits 中的一个、两个或全部三个：</p>
+<ol>
+<li>
+<p><code>FnOnce</code> 适用于可以调用一次的闭包。所有闭包都至少实现了这个 trait，因为所有闭包都可以被调用。将捕获的值移出其主体的闭包将仅实现 <code>FnOnce</code> 而不实现其他 <code>Fn</code> traits，因为它只能被调用一次。</p>
+</li>
+<li>
+<p><code>Fn</code> 适用于不将捕获的值移出其主体且不改变捕获的值的闭包，以及不从其环境中捕获任何内容的闭包。这些闭包可以被多次调用而不改变其环境，这在诸如并发多次调用闭包的情况下很重要。</p>
+</li>
+</ol>
+<p>让我们看看我们在清单 13-1 中使用的 <code>OptionTrait&lt;T&gt;</code> 上的 <code>unwrap_or_else</code> 方法的定义：</p>
+<pre><code class="language-cairo ignore">pub impl OptionTraitImpl&lt;T&gt; of OptionTrait&lt;T&gt; {
+    #[inline]
+    fn unwrap_or_else&lt;F, +Drop&lt;F&gt;, impl func: core::ops::FnOnce&lt;F, ()&gt;[Output: T], +Drop&lt;func::Output&gt;&gt;(
+        self: Option&lt;T&gt;, f: F,
+    ) -&gt; T {
+        match self {
+            Some(x) =&gt; x,
+            None =&gt; f(),
+        }
+    }
+}
+</code></pre>
+<p>回想一下，<code>T</code> 是表示 <code>Option</code> 的 <code>Some</code> 变体中值类型的泛型类型。该类型 <code>T</code> 也是 <code>unwrap_or_else</code> 函数的返回类型：例如，在 <code>Option&lt;ByteArray&gt;</code> 上调用 <code>unwrap_or_else</code> 的代码将获得 <code>ByteArray</code>。</p>
+<p>接下来，注意 <code>unwrap_or_else</code> 函数具有额外的泛型类型参数 <code>F</code>。<code>F</code> 类型是名为 <code>f</code> 的参数的类型，这是我们在调用 <code>unwrap_or_else</code> 时提供的闭包。</p>
+<p>在泛型类型 <code>F</code> 上指定的 trait 约束是 <code>impl func: core::ops::FnOnce&lt;F, ()&gt;[Output: T]</code>，这意味着 <code>F</code> 必须能够被调用一次，不接受参数（使用单元类型 <code>()</code>），并返回 <code>T</code> 作为输出。在 trait 约束中使用 <code>FnOnce</code> 表达了 <code>unwrap_or_else</code> 最多只调用 <code>f</code> 一次的约束。在 <code>unwrap_or_else</code> 的主体中，我们可以看到如果 <code>Option</code> 是 <code>Some</code>，则不会调用 <code>f</code>。如果 <code>Option</code> 是 <code>None</code>，则 <code>f</code> 将被调用一次。因为所有闭包都实现了 <code>FnOnce</code>，<code>unwrap_or_else</code> 接受所有三种类型的闭包，并且尽可能灵活。</p>
+<p><code>Fn</code> traits 在定义或使用利用闭包的函数或类型时很重要。在下一节中，我们将讨论迭代器。许多迭代器方法接受闭包参数，所以在我们继续时请记住这些闭包细节！</p>
+<p>在底层，闭包是通过 <code>FnOnce</code> 和 <code>Fn</code> traits 实现的。
+<code>FnOnce</code> 为可能消耗捕获变量的闭包实现，其中 <code>Fn</code> 为仅捕获可复制变量的闭包实现。</p>
+<h2 id="使用闭包实现你的函数式编程模式"><a class="header" href="#使用闭包实现你的函数式编程模式">使用闭包实现你的函数式编程模式</a></h2>
+<p>闭包的另一个巨大兴趣是，像任何类型的变量一样，你可以将它们作为函数参数传递。这种机制在函数式编程中被大量使用，通过像 <code>map</code>、<code>filter</code> 或 <code>reduce</code> 这样的经典函数。</p>
+<p>这是 <code>map</code> 的一个潜在实现，用于将相同的函数应用于数组的所有项目：</p>
+<pre><code class="language-cairo noplayground">#[generate_trait]
+impl ArrayExt of ArrayExtTrait {
+    // Needed in Cairo 2.11.4 because of a bug in inlining analysis.
+    #[inline(never)]
+    fn map&lt;T, +Drop&lt;T&gt;, F, +Drop&lt;F&gt;, impl func: core::ops::Fn&lt;F, (T,)&gt;, +Drop&lt;func::Output&gt;&gt;(
+        self: Array&lt;T&gt;, f: F,
+    ) -&gt; Array&lt;func::Output&gt; {
+        let mut output: Array&lt;func::Output&gt; = array![];
+        for elem in self {
+            output.append(f(elem));
+        }
+        output
+    }
+}
+</code></pre>
+<blockquote>
+<p>注意，由于内联分析中的错误，应使用 <code>#[inline(never)]</code> 禁用此分析过程。</p>
+</blockquote>
+<p>在此实现中，你会注意到，虽然 <code>T</code> 是输入数组 <code>self</code> 的元素类型，但输出数组的元素类型由 <code>f</code> 闭包的输出类型（来自 <code>Fn</code> trait 的关联类型 <code>func::Output</code>）定义。</p>
+<p>这意味着你的 <code>f</code> 闭包可以返回与以下代码中的 <code>_double</code> 相同类型的元素，或与 <code>_another</code> 相同的任何其他类型的元素：</p>
+<pre><code class="language-cairo">    let double = array![1, 2, 3].map(|item: u32| item * 2);
+    let another = array![1, 2, 3].map(|item: u32| {
+        let x: u64 = item.into();
+        x * x
+    });
+
+    println!("double: {:?}", double);
+    println!("another: {:?}", another);
+</code></pre>
+<blockquote>
+<p>目前，Cairo 2.9 提供了一项实验性功能，允许你使用 <code>Scarb.toml</code> 中的 <code>experimental-features = ["associated_item_constraints"]</code> 指定 trait 的关联类型。</p>
+</blockquote>
+<p>假设我们要为数组实现 <code>filter</code> 函数，以过滤掉不符合标准的元素。此标准将通过一个闭包提供，该闭包接受一个元素作为输入，如果必须保留该元素则返回 <code>true</code>，否则返回 <code>false</code>。这意味着，我们需要指定闭包必须返回一个 <code>boolean</code>。</p>
+<pre><code class="language-cairo noplayground">#[generate_trait]
+impl ArrayFilterExt of ArrayFilterExtTrait {
+    // Needed in Cairo 2.11.4 because of a bug in inlining analysis.
+    #[inline(never)]
+    fn filter&lt;
+        T,
+        +Copy&lt;T&gt;,
+        +Drop&lt;T&gt;,
+        F,
+        +Drop&lt;F&gt;,
+        impl func: core::ops::Fn&lt;F, (T,)&gt;[Output: bool],
+        +Drop&lt;func::Output&gt;,
+    &gt;(
+        self: Array&lt;T&gt;, f: F,
+    ) -&gt; Array&lt;T&gt; {
+        let mut output: Array&lt;T&gt; = array![];
+        for elem in self {
+            if f(elem) {
+                output.append(elem);
+            }
+        }
+        output
+    }
+}
+</code></pre>
+<pre><code class="language-cairo">    let even = array![3, 4, 5, 6].filter(|item: u32| item % 2 == 0);
+    println!("even: {:?}", even);
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch11-00-functional-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12-00-advanced-features.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch11-00-functional-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12-00-advanced-features.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

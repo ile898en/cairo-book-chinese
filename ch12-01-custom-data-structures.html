@@ -1,0 +1,454 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>自定义数据结构 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch12-01-custom-data-structures.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="自定义数据结构"><a class="header" href="#自定义数据结构">自定义数据结构</a></h1>
+<p>当你第一次开始用 Cairo 编程时，你可能会想用数组 (<code>Array&lt;T&gt;</code>) 来存储数据集合。然而，你很快就会意识到数组有一个很大的限制 —— 存储在其中的数据是不可变的。一旦向数组追加了一个值，就不能再修改它。</p>
+<p>当你想要使用可变数据结构时，这可能会令人沮丧。例如，假设你正在制作一个游戏，玩家有等级，并且他们可以升级。你可能会尝试将玩家的等级存储在一个数组中：</p>
+<pre><code class="language-cairo noplayground">    let mut level_players = array![5, 1, 10];
+</code></pre>
+<p>但是随后你意识到，一旦设置好，你就无法增加特定索引处的等级。如果玩家死亡，你也无法将其从数组中移除，除非他碰巧在第一个位置。</p>
+<p>幸运的是，Cairo 提供了一个方便的内置 <a href="./ch03-02-dictionaries.html">字典类型</a> 叫做 <code>Felt252Dict&lt;T&gt;</code>，它允许我们模拟可变数据结构的行为。让我们首先探索如何创建一个包含 <code>Felt252Dict&lt;T&gt;</code> 等成员的结构体。</p>
+<blockquote>
+<p>注意：本章中使用的几个概念在本书前面已经介绍过。如果你需要复习，我们建议查看以下章节：<a href="ch05-00-using-structs-to-structure-related-data.html">结构体</a>、<a href="./ch05-03-method-syntax.html">方法</a>、<a href="./ch08-00-generic-types-and-traits.html">泛型类型</a>、<a href="./ch08-02-traits-in-cairo.html">Traits</a>。</p>
+</blockquote>
+<h2 id="字典作为结构体成员"><a class="header" href="#字典作为结构体成员">字典作为结构体成员</a></h2>
+<p>在 Cairo 中可以将字典定义为结构体成员，但正确地与它们交互可能并不完全无缝。让我们尝试实现一个自定义的 <em>用户数据库</em>，它将允许我们添加用户并查询他们。我们需要定义一个结构体来表示新类型，并定义一个 trait 来定义其功能：</p>
+<pre><code class="language-cairo noplayground">struct UserDatabase&lt;T&gt; {
+    users_updates: u64,
+    balances: Felt252Dict&lt;T&gt;,
+}
+
+trait UserDatabaseTrait&lt;T&gt; {
+    fn new() -&gt; UserDatabase&lt;T&gt;;
+    fn update_user&lt;+Drop&lt;T&gt;&gt;(ref self: UserDatabase&lt;T&gt;, name: felt252, balance: T);
+    fn get_balance&lt;+Copy&lt;T&gt;&gt;(ref self: UserDatabase&lt;T&gt;, name: felt252) -&gt; T;
+}
+</code></pre>
+<p>我们的新类型 <code>UserDatabase&lt;T&gt;</code> 表示一个用户数据库。它在用户的余额上是泛型的，为使用我们数据类型的任何人提供了极大的灵活性。它的两个成员是：</p>
+<ul>
+<li><code>users_updates</code>，字典中用户更新的次数。</li>
+<li><code>balances</code>，每个用户到其余额的映射。</li>
+</ul>
+<p>数据库的核心功能由 <code>UserDatabaseTrait</code> 定义。定义了以下方法：</p>
+<ul>
+<li><code>new</code> 用于轻松创建新的 <code>UserDatabase</code> 类型。</li>
+<li><code>update_user</code> 用于更新数据库中用户的余额。</li>
+<li><code>get_balance</code> 用于查找数据库中用户的余额。</li>
+</ul>
+<p>剩下的唯一步骤是实现 <code>UserDatabaseTrait</code> 中的每个方法，但由于我们正在处理 <a href="./ch08-00-generic-types-and-traits.html">泛型类型</a>，我们还需要正确建立 <code>T</code> 的要求，以便它可以是一个有效的 <code>Felt252Dict&lt;T&gt;</code> 值类型：</p>
+<ol>
+<li><code>T</code> 应该实现 <code>Copy&lt;T&gt;</code>，因为从 <code>Felt252Dict&lt;T&gt;</code> 获取值需要它。</li>
+<li>字典的所有值类型都实现了 <code>Felt252DictValue&lt;T&gt;</code>，我们的泛型类型也应该这样做。</li>
+<li>要插入值，<code>Felt252DictTrait&lt;T&gt;</code> 要求所有值类型都是可丢弃的（实现 <code>Drop&lt;T&gt;</code> trait）。</li>
+</ol>
+<p>在所有限制到位的情况下，实现将如下所示：</p>
+<pre><code class="language-cairo noplayground">impl UserDatabaseImpl&lt;T, +Felt252DictValue&lt;T&gt;&gt; of UserDatabaseTrait&lt;T&gt; {
+    // Creates a database
+    fn new() -&gt; UserDatabase&lt;T&gt; {
+        UserDatabase { users_updates: 0, balances: Default::default() }
+    }
+
+    // Get the user's balance
+    fn get_balance&lt;+Copy&lt;T&gt;&gt;(ref self: UserDatabase&lt;T&gt;, name: felt252) -&gt; T {
+        self.balances.get(name)
+    }
+
+    // Add a user
+    fn update_user&lt;+Drop&lt;T&gt;&gt;(ref self: UserDatabase&lt;T&gt;, name: felt252, balance: T) {
+        self.balances.insert(name, balance);
+        self.users_updates += 1;
+    }
+}
+</code></pre>
+<p>我们的数据库实现几乎完成了，只有一件事除外：编译器不知道如何让 <code>UserDatabase&lt;T&gt;</code> 离开作用域，因为它没有实现 <code>Drop&lt;T&gt;</code> trait，也没有实现 <code>Destruct&lt;T&gt;</code> trait。因为它有一个 <code>Felt252Dict&lt;T&gt;</code> 作为成员，它不能被丢弃，所以我们被迫手动实现 <code>Destruct&lt;T&gt;</code> trait（有关更多信息，请参阅 <a href="ch04-01-what-is-ownership.html#the-drop-trait">所有权</a> 章节）。在 <code>UserDatabase&lt;T&gt;</code> 定义之上使用 <code>#[derive(Destruct)]</code> 将不起作用，因为结构体定义中使用了 <a href="./ch08-00-generic-types-and-traits.html">泛型类型</a>。我们需要自己编写 <code>Destruct&lt;T&gt;</code> trait 实现：</p>
+<pre><code class="language-cairo noplayground">impl UserDatabaseDestruct&lt;T, +Drop&lt;T&gt;, +Felt252DictValue&lt;T&gt;&gt; of Destruct&lt;UserDatabase&lt;T&gt;&gt; {
+    fn destruct(self: UserDatabase&lt;T&gt;) nopanic {
+        self.balances.squash();
+    }
+}
+</code></pre>
+<p>为 <code>UserDatabase</code> 实现 <code>Destruct&lt;T&gt;</code> 是我们获得功能齐全的数据库的最后一步。我们现在可以试用它：</p>
+<pre><code class="language-cairo">#[executable]
+fn main() {
+    let mut db = UserDatabaseTrait::&lt;u64&gt;::new();
+
+    db.update_user('Alex', 100);
+    db.update_user('Maria', 80);
+
+    db.update_user('Alex', 40);
+    db.update_user('Maria', 0);
+
+    let alex_latest_balance = db.get_balance('Alex');
+    let maria_latest_balance = db.get_balance('Maria');
+
+    assert!(alex_latest_balance == 40, "Expected 40");
+    assert!(maria_latest_balance == 0, "Expected 0");
+}
+</code></pre>
+<h2 id="使用字典模拟动态数组"><a class="header" href="#使用字典模拟动态数组">使用字典模拟动态数组</a></h2>
+<p>首先，让我们考虑一下我们要让我们的可变动态数组表现得如何。它应该支持哪些操作？</p>
+<p>它应该：</p>
+<ul>
+<li>允许我们在末尾追加项目。</li>
+<li>让我们通过索引访问任何项目。</li>
+<li>允许设置特定索引处的项目值。</li>
+<li>返回当前长度。</li>
+</ul>
+<p>我们可以在 Cairo 中这样定义这个接口：</p>
+<pre><code class="language-cairo noplayground">trait MemoryVecTrait&lt;V, T&gt; {
+    fn new() -&gt; V;
+    fn get(ref self: V, index: usize) -&gt; Option&lt;T&gt;;
+    fn at(ref self: V, index: usize) -&gt; T;
+    fn push(ref self: V, value: T) -&gt; ();
+    fn set(ref self: V, index: usize, value: T);
+    fn len(self: @V) -&gt; usize;
+}
+</code></pre>
+<p>这为我们的动态数组的实现提供了蓝图。我们将其命名为 <em>MemoryVec</em>，因为它类似于 Rust 中的 <code>Vec&lt;T&gt;</code> 数据结构。</p>
+<blockquote>
+<p>注意：Cairo 的核心库已经包含了一个 <code>Vec&lt;T&gt;</code> 数据结构，严格用作智能合约中的存储类型。为了将我们的数据结构与核心库的数据结构区分开来，我们将我们的实现命名为 <em>MemoryVec</em>。</p>
+</blockquote>
+<h3 id="在-cairo-中实现动态数组"><a class="header" href="#在-cairo-中实现动态数组">在 Cairo 中实现动态数组</a></h3>
+<p>为了存储我们的数据，我们将使用 <code>Felt252Dict&lt;T&gt;</code>，它将索引号 (felts) 映射到值。我们还将存储一个单独的 <code>len</code> 字段来跟踪长度。</p>
+<p>这是我们的结构体的样子。我们将类型 <code>T</code> 包装在 <code>Nullable</code> 指针内，以允许在我们的数据结构中使用任何类型 <code>T</code>，如 <a href="./ch03-02-dictionaries.html#dictionaries-of-types-not-supported-natively">字典</a> 部分所述：</p>
+<pre><code class="language-cairo noplayground">struct MemoryVec&lt;T&gt; {
+    data: Felt252Dict&lt;Nullable&lt;T&gt;&gt;,
+    len: usize,
+}
+</code></pre>
+<p>因为我们再次拥有 <code>Felt252Dict&lt;T&gt;</code> 作为结构体成员，我们需要实现 <code>Destruct&lt;T&gt;</code> trait 来告诉编译器如何让 <code>MemoryVec&lt;T&gt;</code> 离开作用域。</p>
+<pre><code class="language-cairo noplayground">impl DestructMemoryVec&lt;T, +Drop&lt;T&gt;&gt; of Destruct&lt;MemoryVec&lt;T&gt;&gt; {
+    fn destruct(self: MemoryVec&lt;T&gt;) nopanic {
+        self.data.squash();
+    }
+}
+</code></pre>
+<p>使这个向量可变的关键是我们可以在字典中插入值来设置或更新我们数据结构中的值。例如，要更新特定索引处的值，我们这样做：</p>
+<pre><code class="language-cairo noplayground">    fn set(ref self: MemoryVec&lt;T&gt;, index: usize, value: T) {
+        assert!(index &lt; self.len(), "Index out of bounds");
+        self.data.insert(index.into(), NullableTrait::new(value));
+    }
+</code></pre>
+<p>这将覆盖字典中该索引处先前存在的值。</p>
+<p>虽然数组是不可变的，但字典提供了我们需要的灵活性，用于像向量这样的可修改数据结构。</p>
+<p>其余接口的实现很简单。我们接口中定义的所有方法的实现可以如下完成：</p>
+<pre><code class="language-cairo noplayground">impl MemoryVecImpl&lt;T, +Drop&lt;T&gt;, +Copy&lt;T&gt;&gt; of MemoryVecTrait&lt;MemoryVec&lt;T&gt;, T&gt; {
+    fn new() -&gt; MemoryVec&lt;T&gt; {
+        MemoryVec { data: Default::default(), len: 0 }
+    }
+
+    fn get(ref self: MemoryVec&lt;T&gt;, index: usize) -&gt; Option&lt;T&gt; {
+        if index &lt; self.len() {
+            Some(self.data.get(index.into()).deref())
+        } else {
+            None
+        }
+    }
+
+    fn at(ref self: MemoryVec&lt;T&gt;, index: usize) -&gt; T {
+        assert!(index &lt; self.len(), "Index out of bounds");
+        self.data.get(index.into()).deref()
+    }
+
+    fn push(ref self: MemoryVec&lt;T&gt;, value: T) -&gt; () {
+        self.data.insert(self.len.into(), NullableTrait::new(value));
+        self.len.wrapping_add(1_usize);
+    }
+    // ANCHOR: set
+    fn set(ref self: MemoryVec&lt;T&gt;, index: usize, value: T) {
+        assert!(index &lt; self.len(), "Index out of bounds");
+        self.data.insert(index.into(), NullableTrait::new(value));
+    }
+    // ANCHOR_END: set
+    fn len(self: @MemoryVec&lt;T&gt;) -&gt; usize {
+        *self.len
+    }
+}
+</code></pre>
+<p><code>MemoryVec</code> 结构的完整实现可以在社区维护的库 <a href="https://github.com/keep-starknet-strange/alexandria/blob/main/packages/data_structures/src/vec.cairo">Alexandria</a> 中找到。</p>
+<h2 id="使用字典模拟栈"><a class="header" href="#使用字典模拟栈">使用字典模拟栈</a></h2>
+<p>我们现在将看第二个例子及其实现细节：一个栈 (Stack)。</p>
+<p>栈是一个后进先出 (LIFO, Last-In, First-Out) 集合。新元素的插入和现有元素的移除发生在同一端，表示为栈顶。</p>
+<p>让我们定义我们需要什么操作来创建一个栈：</p>
+<ul>
+<li>将一个项目推送到栈顶。</li>
+<li>从栈顶弹出一个项目。</li>
+<li>检查栈中是否还有任何元素。</li>
+</ul>
+<p>从这些规范中，我们可以定义以下接口：</p>
+<pre><code class="language-cairo noplayground">trait StackTrait&lt;S, T&gt; {
+    fn push(ref self: S, value: T);
+    fn pop(ref self: S) -&gt; Option&lt;T&gt;;
+    fn is_empty(self: @S) -&gt; bool;
+}
+</code></pre>
+<h3 id="在-cairo-中实现可变栈"><a class="header" href="#在-cairo-中实现可变栈">在 Cairo 中实现可变栈</a></h3>
+<p>要在 Cairo 中创建栈数据结构，我们可以再次使用 <code>Felt252Dict&lt;T&gt;</code> 来存储栈的值，以及一个 <code>usize</code> 字段来跟踪栈的长度以便对其进行迭代。</p>
+<p>栈结构体定义为：</p>
+<pre><code class="language-cairo noplayground">struct NullableStack&lt;T&gt; {
+    data: Felt252Dict&lt;Nullable&lt;T&gt;&gt;,
+    len: usize,
+}
+</code></pre>
+<p>接下来，让我们看看我们的主要函数 <code>push</code> 和 <code>pop</code> 是如何实现的。</p>
+<pre><code class="language-cairo noplayground">impl NullableStackImpl&lt;T, +Drop&lt;T&gt;, +Copy&lt;T&gt;&gt; of StackTrait&lt;NullableStack&lt;T&gt;, T&gt; {
+    fn push(ref self: NullableStack&lt;T&gt;, value: T) {
+        self.data.insert(self.len.into(), NullableTrait::new(value));
+        self.len += 1;
+    }
+
+    fn pop(ref self: NullableStack&lt;T&gt;) -&gt; Option&lt;T&gt; {
+        if self.is_empty() {
+            return None;
+        }
+        self.len -= 1;
+        Some(self.data.get(self.len.into()).deref())
+    }
+
+    fn is_empty(self: @NullableStack&lt;T&gt;) -&gt; bool {
+        *self.len == 0
+    }
+}
+</code></pre>
+<p>代码使用 <code>insert</code> 和 <code>get</code> 方法来访问 <code>Felt252Dict&lt;T&gt;</code> 中的值。要将元素推送到栈顶，<code>push</code> 函数将元素插入到字典的索引 <code>len</code> 处，并增加栈的 <code>len</code> 字段以跟踪栈顶的位置。要移除值，<code>pop</code> 函数减少 <code>len</code> 的值以更新栈顶的位置，然后检索位置 <code>len</code> 处的最后一个值。</p>
+<p>栈的完整实现，以及你可以在代码中使用的更多数据结构，可以在社区维护的 <a href="https://github.com/keep-starknet-strange/alexandria/tree/main/packages/data_structures/src">Alexandria</a> 库的 “data_structures” crate 中找到。</p>
+<p>{{#quiz ../quizzes/ch12-01-custom-structs.toml}}</p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>干得好！现在你已经了解了数组、字典甚至自定义数据结构。虽然 Cairo 的内存模型是不可变的，这可能会使实现可变数据结构变得困难，但幸运的是我们可以使用 <code>Felt252Dict&lt;T&gt;</code> 类型来模拟可变数据结构。这允许我们实现广泛的对许多应用程序有用的数据结构，有效地隐藏了底层内存模型的复杂性。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch12-00-advanced-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch12-02-smart-pointers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch12-00-advanced-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch12-02-smart-pointers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

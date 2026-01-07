@@ -1,0 +1,631 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>字典 - The Cairo Programming Language (Chinese)</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-d54ab8fc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-725ed061.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Cairo Programming Language (Chinese)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/starkware-libs/cairo-book/edit/main/src/src/ch03-02-dictionaries.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="字典"><a class="header" href="#字典">字典</a></h1>
+<p>Cairo 在其核心库中提供了一种类似字典的类型。<code>Felt252Dict&lt;T&gt;</code> 数据类型表示键值对的集合，其中每个键都是唯一的，并与相应的值相关联。这种数据结构在不同的编程语言中有不同的名称，如映射 (maps)、哈希表 (hash tables)、关联数组 (associative arrays) 等。</p>
+<p><code>Felt252Dict&lt;T&gt;</code> 类型在你想要以某种方式组织数据，而使用 <code>Array&lt;T&gt;</code> 和索引不足以应付时非常有用。Cairo 字典还允许程序员在没有可变内存的情况下轻松模拟可变内存的存在。</p>
+<h2 id="字典的基本用法"><a class="header" href="#字典的基本用法">字典的基本用法</a></h2>
+<p>在其他语言中，创建新字典时通常要定义键和值的数据类型。在 Cairo 中，键类型被限制为 <code>felt252</code>，只留下了指定值数据类型的可能性，由 <code>Felt252Dict&lt;T&gt;</code> 中的 <code>T</code> 表示。</p>
+<p><code>Felt252Dict&lt;T&gt;</code> 的核心功能是在 <code>Felt252DictTrait</code> trait 中实现的，其中包括所有基本操作。其中我们可以找到：</p>
+<ol>
+<li><code>insert(felt252, T) -&gt; ()</code> 用于向字典实例写入值，以及</li>
+<li><code>get(felt252) -&gt; T</code> 用于从中读取值。</li>
+</ol>
+<p>这些函数允许我们像在任何其他语言中一样操作字典。在下面的示例中，我们创建一个字典来表示个人与其余额之间的映射：</p>
+<pre><code class="language-cairo">use core::dict::Felt252Dict;
+
+#[executable]
+fn main() {
+    let mut balances: Felt252Dict&lt;u64&gt; = Default::default();
+
+    balances.insert('Alex', 100);
+    balances.insert('Maria', 200);
+
+    let alex_balance = balances.get('Alex');
+    assert!(alex_balance == 100, "Balance is not 100");
+
+    let maria_balance = balances.get('Maria');
+    assert!(maria_balance == 200, "Balance is not 200");
+}
+</code></pre>
+<p>我们可以通过使用 <code>Default</code> trait 的 <code>default</code> 方法创建一个 <code>Felt252Dict&lt;u64&gt;</code> 的新实例，并使用 <code>insert</code> 方法添加两个人，每个人都有自己的余额。最后，我们使用 <code>get</code> 方法检查用户的余额。这些方法定义在核心库的 <code>Felt252DictTrait</code> trait 中。</p>
+<p>在整本书中，我们要一直在谈论 Cairo 的内存是如何不可变的，这意味着你只能向内存单元写入一次，但 <code>Felt252Dict&lt;T&gt;</code> 类型代表了一种克服这一障碍的方法。我们稍后将在 <a href="./ch03-02-dictionaries.html#dictionaries-underneath">“底层字典”</a> 中解释这是如何实现的。</p>
+<p>基于我们之前的例子，让我们展示一个同一个用户的余额发生变化的代码示例：</p>
+<pre><code class="language-cairo">use core::dict::Felt252Dict;
+
+#[executable]
+fn main() {
+    let mut balances: Felt252Dict&lt;u64&gt; = Default::default();
+
+    // Insert Alex with 100 balance
+    balances.insert('Alex', 100);
+    // Check that Alex has indeed 100 associated with him
+    let alex_balance = balances.get('Alex');
+    assert!(alex_balance == 100, "Alex balance is not 100");
+
+    // Insert Alex again, this time with 200 balance
+    balances.insert('Alex', 200);
+    // Check the new balance is correct
+    let alex_balance_2 = balances.get('Alex');
+    assert!(alex_balance_2 == 200, "Alex balance is not 200");
+}
+</code></pre>
+<p>注意在这个例子中我们是如何两次添加 ‘Alex’ 个人的，每次使用不同的余额，并且每次我们检查其余额时，它都有最后插入的值！<code>Felt252Dict&lt;T&gt;</code> 有效地允许我们“重写”任何给定键的存储值。</p>
+<p>在继续解释字典是如何实现的之前，值得一提的是，一旦你实例化一个 <code>Felt252Dict&lt;T&gt;</code>，在幕后所有的键都有其关联的值初始化为零。这意味着如果例如，你试图获取一个不存在的用户的余额，你会得到 0 而不是错误或未定义的值。这也意味着没有办法从字典中删除数据。这是将此结构纳入你的代码时需要考虑的事情。</p>
+<p>到目前为止，我们已经看到了 <code>Felt252Dict&lt;T&gt;</code> 的所有基本特性，以及它如何模仿任何其他语言中相应数据结构的相同行为，当然是在表面上。Cairo 本质上是一种非确定性图灵完备编程语言，与现存的任何其他流行语言都非常不同，因此这意味着字典的实现也非常不同！</p>
+<p>在接下来的部分中，我们将给出一些关于 <code>Felt252Dict&lt;T&gt;</code> 内部机制以及为使其工作而做出的妥协的见解。之后，我们将看看如何将字典与其他数据结构一起使用，以及使用 <code>entry</code> 方法作为与它们交互的另一种方式。</p>
+<h2 id="底层字典-dictionaries-underneath"><a class="header" href="#底层字典-dictionaries-underneath">底层字典 (Dictionaries Underneath)</a></h2>
+<p>Cairo 非确定性设计的约束之一是其内存系统是不可变的，因此为了模拟可变性，该语言将 <code>Felt252Dict&lt;T&gt;</code> 实现为条目（entries）列表。每个条目代表字典被访问以进行读取/更新/写入目的的时间。一个条目有三个字段：</p>
+<ol>
+<li>一个 <code>key</code> 字段，标识此字典键值对的键。</li>
+<li>一个 <code>previous_value</code> 字段，指示先前在 <code>key</code> 处保存的值。</li>
+<li>一个 <code>new_value</code> 字段，指示在 <code>key</code> 处保存的新值。</li>
+</ol>
+<p>如果我们尝试使用高级结构实现 <code>Felt252Dict&lt;T&gt;</code>，这种内部定义为 <code>Array&lt;Entry&lt;T&gt;&gt;</code>，其中每个 <code>Entry&lt;T&gt;</code> 都有关于它代表什么键值对以及它保存的先前和新值的信息。<code>Entry&lt;T&gt;</code> 的定义将是：</p>
+<pre><code class="language-cairo noplayground">struct Entry&lt;T&gt; {
+    key: felt252,
+    previous_value: T,
+    new_value: T,
+}
+</code></pre>
+<p>每当我们与 <code>Felt252Dict&lt;T&gt;</code> 交互时，都会注册一个新的 <code>Entry&lt;T&gt;</code>：</p>
+<ul>
+<li><code>get</code> 会注册一个状态没有变化的条目，并且先前和新值存储相同的值。</li>
+<li><code>insert</code> 会注册一个新的 <code>Entry&lt;T&gt;</code>，其中 <code>new_value</code> 将是被插入的元素，而 <code>previous_value</code> 是在此之前最后插入的元素。如果它是某个键的第一个条目，那么先前的值将是零。</li>
+</ul>
+<p>使用这个条目列表表明没有任何重写，只是每次 <code>Felt252Dict&lt;T&gt;</code> 交互都创建新的内存单元。让我们用上一节的 <code>balances</code> 字典并插入用户 ‘Alex’ 和 ‘Maria’ 来展示这方面的一个例子：</p>
+<pre><code class="language-cairo">    balances.insert('Alex', 100_u64);
+    balances.insert('Maria', 50_u64);
+    balances.insert('Alex', 200_u64);
+    balances.get('Maria');
+</code></pre>
+<p>这些指令将产生以下条目列表：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th style="text-align: center">key</th><th>previous</th><th>new</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: center">Alex</td><td>0</td><td>100</td></tr>
+<tr><td style="text-align: center">Maria</td><td>0</td><td>50</td></tr>
+<tr><td style="text-align: center">Alex</td><td>100</td><td>200</td></tr>
+<tr><td style="text-align: center">Maria</td><td>50</td><td>50</td></tr>
+</tbody>
+</table>
+</div>
+<p>注意，因为 ‘Alex’ 被插入了两次，它出现了两次，并且 <code>previous</code> 和 <code>current</code> 值被正确设置。另外从 ‘Maria’ 读取也注册了一个先前到当前值没有变化的条目。</p>
+<p>这种实现 <code>Felt252Dict&lt;T&gt;</code> 的方法意味着对于每个读/写操作，都会扫描整个条目列表以查找具有相同 <code>key</code> 的最后一个条目。一旦找到条目，它的 <code>new_value</code> 将被提取并用作要添加的新条目的 <code>previous_value</code>。这意味着与 <code>Felt252Dict&lt;T&gt;</code> 交互具有 <code>O(n)</code> 的最坏情况时间复杂度，其中 <code>n</code> 是列表中的条目数。</p>
+<p>如果你仔细思考实现 <code>Felt252Dict&lt;T&gt;</code> 的替代方法，你肯定会找到它们，甚至可能完全放弃对 <code>previous_value</code> 字段的需求，尽管如此，由于 Cairo 不是你的普通语言，这行不通。Cairo 的目的之一是，使用 STARK 证明系统生成计算完整性的证明。这意味着你需要验证程序执行是正确的并且在 Cairo 限制的边界内。这些边界检查之一包括“字典压缩 (dictionary squashing)”，这需要每个条目的先前值和新值的信息。</p>
+<h2 id="压缩字典-squashing-dictionaries"><a class="header" href="#压缩字典-squashing-dictionaries">压缩字典 (Squashing Dictionaries)</a></h2>
+<p>为了验证使用 <code>Felt252Dict&lt;T&gt;</code> 的 Cairo 程序执行生成的证明是正确的，我们需要检查字典没有被非法篡改。这是通过一种名为 <code>squash_dict</code> 的方法完成的，该方法审查条目列表的每个条目，并检查对字典的访问在整个执行过程中保持连贯。</p>
+<p>压缩的过程如下：给定所有具有特定键 <code>k</code> 的条目，按它们被插入的顺序排列，验证第 i 个条目的 <code>new_value</code> 是否等于第 i + 1 个条目的 <code>previous_value</code>。</p>
+<p>例如，给定以下条目列表：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th style="text-align: center">key</th><th>previous</th><th>new</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: center">Alex</td><td>0</td><td>150</td></tr>
+<tr><td style="text-align: center">Maria</td><td>0</td><td>100</td></tr>
+<tr><td style="text-align: center">Charles</td><td>0</td><td>70</td></tr>
+<tr><td style="text-align: center">Maria</td><td>100</td><td>250</td></tr>
+<tr><td style="text-align: center">Alex</td><td>150</td><td>40</td></tr>
+<tr><td style="text-align: center">Alex</td><td>40</td><td>300</td></tr>
+<tr><td style="text-align: center">Maria</td><td>250</td><td>190</td></tr>
+<tr><td style="text-align: center">Alex</td><td>300</td><td>90</td></tr>
+</tbody>
+</table>
+</div>
+<p>压缩后，条目列表将减少为：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th style="text-align: center">key</th><th>previous</th><th>new</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align: center">Alex</td><td>0</td><td>90</td></tr>
+<tr><td style="text-align: center">Maria</td><td>0</td><td>190</td></tr>
+<tr><td style="text-align: center">Charles</td><td>0</td><td>70</td></tr>
+</tbody>
+</table>
+</div>
+<p>如果在第一个表中的任何值上有变化，压缩将在运行时失败。</p>
+<h2 id="字典销毁-dictionary-destruction"><a class="header" href="#字典销毁-dictionary-destruction">字典销毁 (Dictionary Destruction)</a></h2>
+<p>如果你运行 <a href="./ch03-02-dictionaries.html#basic-use-of-dictionaries">“字典的基本用法”</a> 部分的示例，你会注意到从未调用过字典压缩，但程序还是成功编译了。幕后发生的事情是，通过 <code>Destruct&lt;T&gt;</code> trait 的 <code>Felt252Dict&lt;T&gt;</code> 实现自动调用了压缩。此调用发生在 <code>balance</code> 字典超出作用域之前。</p>
+<p><code>Destruct&lt;T&gt;</code> trait 代表了除了 <code>Drop&lt;T&gt;</code> 之外将实例移出作用域的另一种方式。这两者之间的主要区别是 <code>Drop&lt;T&gt;</code> 被视为无操作 (no-op)，这意味着它不生成新的 CASM，而 <code>Destruct&lt;T&gt;</code> 没有此限制。唯一主动使用 <code>Destruct&lt;T&gt;</code> trait 的类型是 <code>Felt252Dict&lt;T&gt;</code>，对于每种其他类型，<code>Destruct&lt;T&gt;</code> 和 <code>Drop&lt;T&gt;</code> 是同义词。你可以在附录 C 的 <a href="./appendix-03-derivable-traits.html#drop-and-destruct">Drop 和 Destruct</a> 部分阅读更多关于这些 trait 的信息。</p>
+<p>稍后在 <a href="./ch12-01-custom-data-structures.html#dictionaries-as-struct-members">“作为结构体成员的字典”</a> 部分，我们将有一个实践示例，我们将为自定义类型实现 <code>Destruct&lt;T&gt;</code> trait。</p>
+<h2 id="更多字典"><a class="header" href="#更多字典">更多字典</a></h2>
+<p>到目前为止，我们已经对 <code>Felt252Dict&lt;T&gt;</code> 的功能以及它为何以某种方式实现进行了全面的概述。如果你没有完全理解它，别担心，因为在本节中我们将有更多使用字典的例子。</p>
+<p>我们将从解释 <code>entry</code> 方法开始，该方法是包含在 <code>Felt252DictTrait&lt;T&gt;</code> 中的字典基本功能的一部分，我们在开始时没有提到。之后不久，我们将看到如何将 <code>Felt252Dict&lt;T&gt;</code> 与其他 <a href="./ch03-02-dictionaries.html#dictionaries-of-types-not-supported-natively">复杂类型</a> 一起使用的例子，例如 <code>Array&lt;T&gt;</code>。</p>
+<h2 id="entry-和-finalize"><a class="header" href="#entry-和-finalize">Entry 和 Finalize</a></h2>
+<p>在 <a href="./ch03-02-dictionaries.html#dictionaries-underneath">“底层字典”</a> 部分，我们解释了 <code>Felt252Dict&lt;T&gt;</code> 在内部是如何工作的。它是每次以任何方式访问字典时的条目列表。它首先会根据给定的特定 <code>key</code> 找到最后一个条目，然后根据它正在执行的任何操作对其进行相应的更新。Cairo 语言为我们提供了通过 <code>entry</code> 和 <code>finalize</code> 方法自己复制此操作的工具。</p>
+<p><code>entry</code> 方法作为 <code>Felt252DictTrait&lt;T&gt;</code> 的一部分出现，目的是根据给定键创建一个新条目。一旦调用，此方法获取字典的所有权并返回要更新的条目。方法签名如下：</p>
+<pre><code class="language-cairo noplayground">fn entry(self: Felt252Dict&lt;T&gt;, key: felt252) -&gt; (Felt252DictEntry&lt;T&gt;, T) nopanic
+</code></pre>
+<p>第一个输入参数获取字典的所有权，而第二个参数用于创建适当的条目。它返回一个元组，其中包含 <code>Felt252DictEntry&lt;T&gt;</code>（Cairo 用于表示字典条目的类型）和一个表示先前保存的值的 <code>T</code>。<code>nopanic</code> 符号简单地表示该函数保证永远不会 panic。</p>
+<p>接下来要做的是用新值更新条目。为此，我们使用 <code>finalize</code> 方法，该方法插入条目并返回字典的所有权：</p>
+<pre><code class="language-cairo noplayground">fn finalize(self: Felt252DictEntry&lt;T&gt;, new_value: T) -&gt; Felt252Dict&lt;T&gt;
+</code></pre>
+<p>此方法接收条目和新值作为参数，并返回更新后的字典。</p>
+<p>让我们看一个使用 <code>entry</code> 和 <code>finalize</code> 的例子。想象一下我们想实现我们自己的字典 <code>get</code> 方法版本。那么我们应该做以下事情：</p>
+<ol>
+<li>使用 <code>entry</code> 方法创建要添加的新条目。</li>
+<li>将 <code>new_value</code> 等于 <code>previous_value</code> 的条目插回。</li>
+<li>返回该值。</li>
+</ol>
+<p>实现我们的自定义 get 看起来像这样：</p>
+<pre><code class="language-cairo noplayground">use core::dict::{Felt252Dict, Felt252DictEntryTrait};
+
+fn custom_get&lt;T, +Felt252DictValue&lt;T&gt;, +Drop&lt;T&gt;, +Copy&lt;T&gt;&gt;(
+    ref dict: Felt252Dict&lt;T&gt;, key: felt252,
+) -&gt; T {
+    // Get the new entry and the previous value held at `key`
+    let (entry, prev_value) = dict.entry(key);
+
+    // Store the value to return
+    let return_value = prev_value;
+
+    // Update the entry with `prev_value` and get back ownership of the dictionary
+    dict = entry.finalize(prev_value);
+
+    // Return the read value
+    return_value
+}
+</code></pre>
+<p><code>ref</code> 关键字意味着变量的所有权将在函数结束时归还。这个概念将在 <a href="./ch04-02-references-and-snapshots.html">“引用和快照”</a> 部分更详细地解释。</p>
+<p>实现 <code>insert</code> 方法将遵循类似的工作流程，除了在定稿 (finalize) 时插入新值。如果我们实现它，它看起来像下面这样：</p>
+<pre><code class="language-cairo noplayground">use core::dict::{Felt252Dict, Felt252DictEntryTrait};
+
+fn custom_insert&lt;T, +Felt252DictValue&lt;T&gt;, +Destruct&lt;T&gt;, +Drop&lt;T&gt;&gt;(
+    ref dict: Felt252Dict&lt;T&gt;, key: felt252, value: T,
+) {
+    // Get the last entry associated with `key`
+    // Notice that if `key` does not exist, `_prev_value` will
+    // be the default value of T.
+    let (entry, _prev_value) = dict.entry(key);
+
+    // Insert `entry` back in the dictionary with the updated value,
+    // and receive ownership of the dictionary
+    dict = entry.finalize(value);
+}
+</code></pre>
+<p>作为最后的说明，这两个方法的实现方式与 <code>Felt252Dict&lt;T&gt;</code> 的 <code>insert</code> 和 <code>get</code> 的实现方式类似。此代码显示了一些用法示例：</p>
+<pre><code class="language-cairo">#[executable]
+fn main() {
+    let mut dict: Felt252Dict&lt;u64&gt; = Default::default();
+
+    custom_insert(ref dict, '0', 100);
+
+    let val = custom_get(ref dict, '0');
+
+    assert!(val == 100, "Expecting 100");
+}
+</code></pre>
+<h2 id="原生不支持类型的字典"><a class="header" href="#原生不支持类型的字典">原生不支持类型的字典</a></h2>
+<p>我们没有谈到的 <code>Felt252Dict&lt;T&gt;</code> 的一个限制是 <code>Felt252DictValue&lt;T&gt;</code> trait。此 trait 定义了 <code>zero_default</code> 方法，当字典中不存在值时会调用该方法。这是一些常见数据类型（如大多数无符号整数、<code>bool</code> 和 <code>felt252</code>）实现的——但它没有为更复杂的类型（如数组、结构体（包括 <code>u256</code>）和核心库中的其他类型）实现。这意味着制作原生不支持类型的字典不是一项简单的任务，因为你需要编写几个 trait 实现才能使数据类型成为有效的字典值类型。为了弥补这一点，你可以将你的类型包装在 <code>Nullable&lt;T&gt;</code> 中。</p>
+<p><code>Nullable&lt;T&gt;</code> 是一个智能指针类型，在没有值的情况下，它可以指向一个值或是 <code>null</code>。它通常在面向对象编程语言中当引用不指向任何地方时使用。与 <code>Option</code> 的区别在于包装的值存储在 <code>Box&lt;T&gt;</code> 数据类型中。<code>Box&lt;T&gt;</code> 类型是一个智能指针，允许我们为数据使用专用的 <code>boxed_segment</code> 内存段，并使用一次只能在一个地方操作的指针访问此段。有关更多信息，请参阅 <a href="./ch12-02-smart-pointers.html">智能指针章节</a>。</p>
+<p>让我们用一个例子来展示。我们将尝试在字典中存储一个 <code>Span&lt;felt252&gt;</code>。为此，我们将使用 <code>Nullable&lt;T&gt;</code> 和 <code>Box&lt;T&gt;</code>。此外，我们存储的是 <code>Span&lt;T&gt;</code> 而不是 <code>Array&lt;T&gt;</code>，因为后者没有实现从字典读取所需的 <code>Copy&lt;T&gt;</code> trait。</p>
+<pre><code class="language-cairo noplayground">use core::dict::Felt252Dict;
+use core::nullable::{FromNullableResult, NullableTrait, match_nullable};
+
+#[executable]
+fn main() {
+    // Create the dictionary
+    let mut d: Felt252Dict&lt;Nullable&lt;Span&lt;felt252&gt;&gt;&gt; = Default::default();
+
+    // Create the array to insert
+    let a = array![8, 9, 10];
+
+    // Insert it as a `Span`
+    d.insert(0, NullableTrait::new(a.span()));
+
+//...
+</code></pre>
+<p>在此代码片段中，我们做的第一件事是创建一个新字典 <code>d</code>。我们要它保存一个 <code>Nullable&lt;Span&gt;</code>。在那之后，我们创建了一个数组并填入了值。</p>
+<p>最后一步是将数组作为 span 插入字典中。注意我们使用 <code>NullableTrait</code> 的 <code>new</code> 函数来执行此操作。</p>
+<p>一旦元素在字典中，并且我们要获取它，我们遵循相同的步骤但顺序相反。以下代码显示了如何实现这一点：</p>
+<pre><code class="language-cairo noplayground">//...
+
+    // Get value back
+    let val = d.get(0);
+
+    // Search the value and assert it is not null
+    let span = match match_nullable(val) {
+        FromNullableResult::Null =&gt; panic!("No value found"),
+        FromNullableResult::NotNull(val) =&gt; val.unbox(),
+    };
+
+    // Verify we are having the right values
+    assert!(*span.at(0) == 8, "Expecting 8");
+    assert!(*span.at(1) == 9, "Expecting 9");
+    assert!(*span.at(2) == 10, "Expecting 10");
+}
+</code></pre>
+<p>在这里我们：</p>
+<ol>
+<li>使用 <code>get</code> 读取值。</li>
+<li>使用 <code>match_nullable</code> 函数验证它非 null。</li>
+<li>解包 box 内的值并断言它是正确的。</li>
+</ol>
+<p>完整的脚本看起来像这样：</p>
+<pre><code class="language-cairo">// ANCHOR: imports
+use core::dict::Felt252Dict;
+use core::nullable::{FromNullableResult, NullableTrait, match_nullable};
+// ANCHOR_END: imports
+
+// ANCHOR: header
+#[executable]
+fn main() {
+    // Create the dictionary
+    let mut d: Felt252Dict&lt;Nullable&lt;Span&lt;felt252&gt;&gt;&gt; = Default::default();
+
+    // Create the array to insert
+    let a = array![8, 9, 10];
+
+    // Insert it as a `Span`
+    d.insert(0, NullableTrait::new(a.span()));
+    // ANCHOR_END: header
+
+    // ANCHOR: footer
+    // Get value back
+    let val = d.get(0);
+
+    // Search the value and assert it is not null
+    let span = match match_nullable(val) {
+        FromNullableResult::Null =&gt; panic!("No value found"),
+        FromNullableResult::NotNull(val) =&gt; val.unbox(),
+    };
+
+    // Verify we are having the right values
+    assert!(*span.at(0) == 8, "Expecting 8");
+    assert!(*span.at(1) == 9, "Expecting 9");
+    assert!(*span.at(2) == 10, "Expecting 10");
+}
+// ANCHOR_END: footer
+
+</code></pre>
+<h2 id="在字典内使用数组"><a class="header" href="#在字典内使用数组">在字典内使用数组</a></h2>
+<p>在上一节中，我们探索了如何使用 <code>Nullable&lt;T&gt;</code> 和 <code>Box&lt;T&gt;</code> 在字典中存储和检索复杂类型。现在，让我们看看如何在字典中存储数组并动态修改其内容。</p>
+<p>在 Cairo 的字典中存储数组与存储其他类型略有不同。这是因为数组是更复杂的数据结构，需要特殊处理以避免内存复制和引用问题。</p>
+<p>首先，让我们看看如何创建一个字典并将数组插入其中。这个过程非常直接，遵循与插入其他类型数据类似的模式：</p>
+<pre><code class="language-cairo">use core::dict::Felt252Dict;
+
+#[executable]
+fn main() {
+    let arr = array![20, 19, 26];
+    let mut dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt; = Default::default();
+    dict.insert(0, NullableTrait::new(arr));
+    println!("Array inserted successfully.");
+}
+</code></pre>
+<p>然而，试图使用 <code>get</code> 方法从字典中读取数组将导致编译器错误。这是因为 <code>get</code> 试图在内存中复制数组，这对数组来说是不可能的（正如我们已经在 <a href="./ch03-02-dictionaries.html#dictionaries-of-types-not-supported-natively">上一节</a> 中提到的，<code>Array&lt;T&gt;</code> 没有实现 <code>Copy&lt;T&gt;</code> trait）：</p>
+<pre><code class="language-cairo">//TAG: does_not_compile
+use core::dict::Felt252Dict;
+use core::nullable::{FromNullableResult, match_nullable};
+
+#[executable]
+fn main() {
+    let arr = array![20, 19, 26];
+    let mut dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt; = Default::default();
+    dict.insert(0, NullableTrait::new(arr));
+    println!("Array: {:?}", get_array_entry(ref dict, 0));
+}
+
+fn get_array_entry(ref dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt;, index: felt252) -&gt; Span&lt;u8&gt; {
+    let val = dict.get(0); // This will cause a compiler error
+    let arr = match match_nullable(val) {
+        FromNullableResult::Null =&gt; panic!("No value!"),
+        FromNullableResult::NotNull(val) =&gt; val.unbox(),
+    };
+    arr.span()
+}
+</code></pre>
+<pre><code class="language-shell">$ scarb execute 
+   Compiling no_listing_15_dict_of_array_attempt_get v0.1.0 (listings/ch03-common-collections/no_listing_15_dict_of_array_attempt_get/Scarb.toml)
+error: Trait has no implementation in context: core::traits::Copy::&lt;core::nullable::Nullable::&lt;core::array::Array::&lt;core::integer::u8&gt;&gt;&gt;.
+ --&gt; listings/ch03-common-collections/no_listing_15_dict_of_array_attempt_get/src/lib.cairo:14:20
+    let val = dict.get(0); // This will cause a compiler error
+                   ^^^
+
+error: could not compile `no_listing_15_dict_of_array_attempt_get` due to previous error
+error: `scarb` command exited with error
+
+</code></pre>
+<p>为了正确地从字典中读取数组，我们需要使用字典条目。这允许我们获取数组值的引用而不复制它：</p>
+<pre><code class="language-cairo noplayground">fn get_array_entry(ref dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt;, index: felt252) -&gt; Span&lt;u8&gt; {
+    let (entry, _arr) = dict.entry(index);
+    let mut arr = _arr.deref_or(array![]);
+    let span = arr.span();
+    dict = entry.finalize(NullableTrait::new(arr));
+    span
+}
+</code></pre>
+<blockquote>
+<p>注意：我们必须在 finalize 条目之前将数组转换为 <code>Span</code>，因为调用 <code>NullableTrait::new(arr)</code> 会移动数组，从而使其无法从函数返回。</p>
+</blockquote>
+<p>要修改存储的数组，例如追加一个新值，我们可以使用类似的方法。下面的 <code>append_value</code> 函数演示了这一点：</p>
+<pre><code class="language-cairo noplayground">fn append_value(ref dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt;, index: felt252, value: u8) {
+    let (entry, arr) = dict.entry(index);
+    let mut unboxed_val = arr.deref_or(array![]);
+    unboxed_val.append(value);
+    dict = entry.finalize(NullableTrait::new(unboxed_val));
+}
+</code></pre>
+<p>在 <code>append_value</code> 函数中，我们访问字典条目，解引用数组，追加新值，并用更新的数组 finalize 条目。</p>
+<blockquote>
+<p>注意：从存储的数组中移除项目可以用类似的方式实现。</p>
+</blockquote>
+<p>下面是演示在字典中创建、插入、读取和修改数组的完整示例：</p>
+<pre><code class="language-cairo">use core::dict::{Felt252Dict, Felt252DictEntryTrait};
+use core::nullable::NullableTrait;
+
+//ANCHOR: append
+fn append_value(ref dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt;, index: felt252, value: u8) {
+    let (entry, arr) = dict.entry(index);
+    let mut unboxed_val = arr.deref_or(array![]);
+    unboxed_val.append(value);
+    dict = entry.finalize(NullableTrait::new(unboxed_val));
+}
+//ANCHOR_END: append
+
+//ANCHOR: get
+fn get_array_entry(ref dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt;, index: felt252) -&gt; Span&lt;u8&gt; {
+    let (entry, _arr) = dict.entry(index);
+    let mut arr = _arr.deref_or(array![]);
+    let span = arr.span();
+    dict = entry.finalize(NullableTrait::new(arr));
+    span
+}
+//ANCHOR_END: get
+
+#[executable]
+fn main() {
+    let arr = array![20, 19, 26];
+    let mut dict: Felt252Dict&lt;Nullable&lt;Array&lt;u8&gt;&gt;&gt; = Default::default();
+    dict.insert(0, NullableTrait::new(arr));
+    println!("Before insertion: {:?}", get_array_entry(ref dict, 0));
+
+    append_value(ref dict, 0, 30);
+
+    println!("After insertion: {:?}", get_array_entry(ref dict, 0));
+}
+</code></pre>
+<p>{{#quiz ../quizzes/ch03-02-dictionaries.toml}}</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch03-01-arrays.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ch04-00-understanding-ownership.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch03-01-arrays.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ch04-00-understanding-ownership.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
