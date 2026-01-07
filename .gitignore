@@ -1,0 +1,9 @@
+# mdbook output
+book/
+
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/

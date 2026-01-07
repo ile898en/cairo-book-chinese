@@ -1,0 +1,10 @@
+[book]
+authors = ["StarkWare"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "The Cairo Programming Language (Chinese)"
+
+[output.html]
+git-repository-url = "https://github.com/starkware-libs/cairo-book"
+edit-url-template = "https://github.com/starkware-libs/cairo-book/edit/main/src/{path}"
