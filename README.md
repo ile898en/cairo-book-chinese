@@ -1,6 +1,8 @@
 # Cairo Book 中文版
 
-本项目是 [Cairo Book](https://www.starknet.io/cairo-book/) 的简体中文翻译版本。
+本项目是 [Cairo Book](https://github.com/starkware-libs/cairo-book) 的简体中文翻译版本。
+
+**在线阅读**: [https://ile898en.github.io/cairo-book-chinese/](https://ile898en.github.io/cairo-book-chinese/)
 
 ## 关于翻译
 
