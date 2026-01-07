@@ -1,6 +1,6 @@
 # Cairo Book 中文版
 
-本项目是 [Cairo Book](https://github.com/starkware-libs/cairo-book) 的简体中文翻译版本。
+本项目是 [Cairo Book](https://www.starknet.io/cairo-book/) 的简体中文翻译版本。
 
 ## 关于翻译
 
@@ -11,4 +11,4 @@
 ## 原始项目
 
 The Cairo Programming Language book is maintained by StarkWare.
-Original Repository: https://github.com/starkware-libs/cairo-book
+Original Repository: https://www.starknet.io/cairo-book/
